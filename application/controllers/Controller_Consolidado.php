@@ -1,13 +1,13 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Controller_Home extends CI_Controller {
+class Controller_Consolidado extends CI_Controller {
 
 	public function index($mensaje = '', $fila = '')
 	{
 		$data = array('mensaje' => $mensaje, 'consulta' => $fila);
 		$this->load->view('disenio/librerias');
-		$this->load->view('home/index', $data);
+		$this->load->view('home/consultas', $data);
 	}
 
 	public function control()
@@ -20,7 +20,7 @@ class Controller_Home extends CI_Controller {
 		$db_pass = '';
 		
 		$database = 'empresa_db';
-		$table = 'tbl_recmanual';
+		$table = 'tbl_consolidado';
 		if (!@mysql_connect($db_host, $db_user, $db_pass))
 			die("No se pudo establecer conexión a la base de datos");
 		
@@ -41,10 +41,33 @@ class Controller_Home extends CI_Controller {
 		
 					while (($data = fgetcsv($handle, 1000, ";")) !== FALSE)
 					{
+						$time = time();
+						$fechaActual = date('d-m-Y', $time);
+						$fechaUpdate = "00-00-0000";
+
 						//Insertamos los datos con los valores...
-						$sql = "INSERT into tbl_recmanual (datomanual) 
-									values($data[0])";
-						mysql_query($sql) or die('Error: '.mysql_error());
+						$sql = "INSERT into tbl_consolidado (	n9cono, n9cocu,
+																n9cose, n9coru,
+																n9meco, n9feco,
+																n9leco, n9cocl,
+																n9nomb, n9refe,
+																n9fecl, n9lect,
+																n9cobs, cucoon,
+																cucooe, createddato,
+																updatedato
+																) 
+									values(	'$data[0]','$data[1]',
+											'$data[2]','$data[3]',
+											'$data[4]','$data[5]',
+											'$data[6]','$data[7]',
+											'$data[8]','$data[9]',
+											'$data[10]','$data[11]',
+											'$data[12]','$data[13]',
+											'$data[14]','$fechaActual',
+											'$fechaUpdate'
+											)";
+						//mysql_query($sql) or die('Error: '.mysql_error());
+						mysql_query($sql);
 					}
 					//cerramos la lectura del archivo "abrir archivo" con un "cerrar archivo"
 					fclose($handle);

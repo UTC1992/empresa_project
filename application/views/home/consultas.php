@@ -10,7 +10,7 @@
 	<br>
 	<fieldset class="form-control">
 		<legend class="form-control"><strong>Busqueda con archivo CSV</strong></legend>
-		<form class="" action='<?=base_url()?>Controller_Home/control' method='post' enctype="multipart/form-data">
+		<form class="" action='<?=base_url()?>Controller_Consolidado/control' method='post' enctype="multipart/form-data">
 			<div class="">
 				<input class="btn btn-outline-primary" type='file' name='sel_file' style="margin-right: 5px;">
 				<input class="btn btn-warning" type='submit' name='submit' value='Subir'>		

@@ -1,4 +1,7 @@
 <?php
+
+set_time_limit(0);
+
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Controller_Consolidado extends CI_Controller {
@@ -39,7 +42,7 @@ class Controller_Consolidado extends CI_Controller {
 					$filename = $_FILES['sel_file']['tmp_name'];
 					$handle = fopen($filename, "r");
 		
-					while (($data = fgetcsv($handle, 1000, ";")) !== FALSE)
+					while (($data = fgetcsv($handle,10000, ";")) !== FALSE)
 					{
 						$time = time();
 						$fechaActual = date('d-m-Y', $time);
@@ -75,7 +78,8 @@ class Controller_Consolidado extends CI_Controller {
 					
 					//redireccionar
 					$mensaje = "1";
-					$this->index($mensaje);
+					//$this->index($mensaje);
+					redirect('/Controller_Consolidado/index',$mensaje);
 				}
 				else
 				{
@@ -85,7 +89,8 @@ class Controller_Consolidado extends CI_Controller {
 
 					//redireccionar
 					$mensaje = "0";
-					$this->index($mensaje);
+					//$this->index($mensaje);
+					redirect('/Controller_Consolidado/index',$mensaje);
 				}
 			}
 	

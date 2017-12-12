@@ -5,12 +5,8 @@
 	*/
 	class Model_Tblconsolidado extends CI_Model
 	{
-		public function truncate()
-		{
-			$resutl = $this->db->query("TRUNCATE TABLE tbl_consolidado;");
-		}
 
-		public function getByMedidor()
+		public function getActividades()
 		{
 			$result = $this->db->query("SELECT * from tbl_cliente, tbl_recmanual 
 										WHERE tbl_cliente.medidor = tbl_recmanual.datomanual");
@@ -21,10 +17,10 @@
 			}
 		}
 
-		public function getByCuenta()
+		public function getConteoDiario()
 		{
 			$result = $this->db->query("SELECT * from tbl_cliente, tbl_recmanual 
-										WHERE tbl_cliente.cuenta = tbl_recmanual.datomanual");
+										WHERE tbl_cliente.medidor = tbl_recmanual.datomanual");
 			if ($result->num_rows() > 0) {
 				return $result;
 			} else {

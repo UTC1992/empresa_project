@@ -1,28 +1,9 @@
 <?php
-
-set_time_limit(0);
-
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Controller_Consolidado extends CI_Controller {
+class Controller_Reconeccion extends CI_Controller {
 
 	public function index($mensaje = '', $fila = '')
-	{
-		$data = array('mensaje' => $mensaje, 'consulta' => $fila);
-		$this->load->view('disenio/librerias');
-		$this->load->view('layout/menu');
-		$this->load->view('home/consultas', $data);
-	}
-
-	public function importar($mensaje = '', $fila = '')
-	{
-		$data = array('mensaje' => $mensaje, 'consulta' => $fila);
-		$this->load->view('disenio/librerias');
-		$this->load->view('layout/menu');
-		$this->load->view('home/importar', $data);
-	}
-
-	public function reconeccion($mensaje = '', $fila = '')
 	{
 		$data = array('mensaje' => $mensaje, 'consulta' => $fila);
 		$this->load->view('disenio/librerias');
@@ -40,7 +21,7 @@ class Controller_Consolidado extends CI_Controller {
 		$db_pass = '';
 		
 		$database = 'empresa_db';
-		$table = 'tbl_consolidado';
+		$table = 'tbl_recmanual';
 		if (!@mysql_connect($db_host, $db_user, $db_pass))
 			die("No se pudo establecer conexión a la base de datos");
 		
@@ -59,35 +40,12 @@ class Controller_Consolidado extends CI_Controller {
 					$filename = $_FILES['sel_file']['tmp_name'];
 					$handle = fopen($filename, "r");
 		
-					while (($data = fgetcsv($handle,10000, ";")) !== FALSE)
+					while (($data = fgetcsv($handle, 1000, ";")) !== FALSE)
 					{
-						$time = time();
-						$fechaActual = date('d-m-Y', $time);
-						$fechaUpdate = "00-00-0000";
-
 						//Insertamos los datos con los valores...
-						$sql = "INSERT into tbl_consolidado (	n9cono, n9cocu,
-																n9cose, n9coru,
-																n9meco, n9feco,
-																n9leco, n9cocl,
-																n9nomb, n9refe,
-																n9fecl, n9lect,
-																n9cobs, cucoon,
-																cucooe, createddato,
-																updatedato
-																) 
-									values(	'$data[0]','$data[1]',
-											'$data[2]','$data[3]',
-											'$data[4]','$data[5]',
-											'$data[6]','$data[7]',
-											'$data[8]','$data[9]',
-											'$data[10]','$data[11]',
-											'$data[12]','$data[13]',
-											'$data[14]','$fechaActual',
-											'$fechaUpdate'
-											)";
-						//mysql_query($sql) or die('Error: '.mysql_error());
-						mysql_query($sql);
+						$sql = "INSERT into tbl_recmanual (datomanual) 
+									values($data[0])";
+						mysql_query($sql) or die('Error: '.mysql_error());
 					}
 					//cerramos la lectura del archivo "abrir archivo" con un "cerrar archivo"
 					fclose($handle);
@@ -95,8 +53,7 @@ class Controller_Consolidado extends CI_Controller {
 					
 					//redireccionar
 					$mensaje = "1";
-					//$this->index($mensaje);
-					redirect('/Controller_Consolidado/index',$mensaje);
+					$this->index($mensaje);
 				}
 				else
 				{
@@ -106,8 +63,7 @@ class Controller_Consolidado extends CI_Controller {
 
 					//redireccionar
 					$mensaje = "0";
-					//$this->index($mensaje);
-					redirect('/Controller_Consolidado/index',$mensaje);
+					$this->index($mensaje);
 				}
 			}
 	

@@ -1,29 +1,7 @@
-
-<center>
-<br>
-<h1>Consolidado</h1>
-<div>
-
-	<div class="container">
-		<div class="">
-			<a class="btn btn-outline-info"  href="<?= base_url()?>Controller_Home/index">Inicio</a>
-			<a class="btn btn-outline-info" href="<?= base_url()?>Controller_Consolidado/index">Consolidado</a>
-		</div>
 		<br>
 		<fieldset class="form-control">
-			<legend class="form-control"><strong>Importar consolidado CSV</strong></legend>
-			<form class="" action='<?=base_url()?>Controller_Consolidado/control' method='post' enctype="multipart/form-data">
-				<div class="">
-					<input class="btn btn-outline-primary" type='file' name='sel_file' style="margin-right: 5px;">
-					<input class="btn btn-warning" type='submit' name='submit' value='Subir'>		
-				</div>
-			</form>
-			<?php if($mensaje == "1") { ?>
-				<label class="btn btn-success"><strong>Importación exitosa !</strong></label>
-			<?php }?>
-			<?php if($mensaje == "0") { ?>
-				<label class="btn btn-danger"><strong>Archivo invalido !</strong></label>
-			<?php } ?>
+			<legend class="form-control"><strong>Buscar actividades diarias</strong></legend>
+			
 			
 			<?php if($mensaje == "2") { ?>
 				<label class="btn btn-success"><strong>La tabla esta vacía !</strong></label>

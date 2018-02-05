@@ -81,11 +81,7 @@ class Controller_Reconeccion extends CI_Controller {
 		$datos = array();
 		
 		$fila = $this->Model_Tblrecmanual->getByMedidor();
-		/*
-		foreach ($fila->result() as $row) {
-			echo $row->codigo."<br>";
-		}
-		*/
+		
 		$mensaje = "";
 		$this->index($mensaje, $fila);
 	}
@@ -95,6 +91,26 @@ class Controller_Reconeccion extends CI_Controller {
 		$datos = array();
 		
 		$fila = $this->Model_Tblrecmanual->getByCuenta();
+		
+		$mensaje = "";
+		$this->index($mensaje, $fila);
+	}
+
+	public function buscar_un_medidor()
+	{
+		$datos = array();
+		$medidor = $this->input->post('medidor');
+		$fila = $this->Model_Tblrecmanual->getByUnMedidor($medidor);
+		
+		$mensaje = "";
+		$this->index($mensaje, $fila);
+	}
+
+	public function buscar_una_cuenta()
+	{
+		$datos = array();
+		$cuenta = $this->input->post('cuenta');
+		$fila = $this->Model_Tblrecmanual->getByUnaCuenta($cuenta);
 		
 		$mensaje = "";
 		$this->index($mensaje, $fila);

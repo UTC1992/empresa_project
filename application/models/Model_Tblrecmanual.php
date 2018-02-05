@@ -31,4 +31,26 @@
 				return null;
 			}
 		}
+
+		public function getByUnMedidor($medidor = '')
+		{
+			$result = $this->db->query("SELECT * from tbl_cliente 
+										WHERE tbl_cliente.medidor = '" . $medidor . "'");
+			if ($result->num_rows() > 0) {
+				return $result;
+			} else {
+				return null;
+			}
+		}
+
+		public function getByUnaCuenta($cuenta = '')
+		{
+			$result = $this->db->query("SELECT * from tbl_cliente
+										WHERE tbl_cliente.cuenta = '" . $cuenta. "'");
+			if ($result->num_rows() > 0) {
+				return $result;
+			} else {
+				return null;
+			}
+		}
     }

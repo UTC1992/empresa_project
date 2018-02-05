@@ -22,14 +22,6 @@ class Controller_Consolidado extends CI_Controller {
 		$this->load->view('home/importar', $data);
 	}
 
-	public function reconeccion($mensaje = '', $fila = '')
-	{
-		$data = array('mensaje' => $mensaje, 'consulta' => $fila);
-		$this->load->view('disenio/librerias');
-		$this->load->view('layout/menu');
-		$this->load->view('home/reconecciones', $data);
-	}
-
 	public function control()
 	{
 		//conexiones, conexiones everywhere
@@ -113,32 +105,12 @@ class Controller_Consolidado extends CI_Controller {
 	
 	}
 
-	public function vaciar_tbl_manual()
-	{
-		$this->Model_Tblrecmanual->truncate();
-		$mensaje = "2";
-		$this->index($mensaje);
-	}
-
-	public function buscar_medidor()
+	public function consultarActDiarias()
 	{
 		$datos = array();
-		
-		$fila = $this->Model_Tblrecmanual->getByMedidor();
-		/*
-		foreach ($fila->result() as $row) {
-			echo $row->codigo."<br>";
-		}
-		*/
-		$mensaje = "";
-		$this->index($mensaje, $fila);
-	}
-
-	public function buscar_cuenta()
-	{
-		$datos = array();
-		
-		$fila = $this->Model_Tblrecmanual->getByCuenta();
+		$fecha = $this->input->post('fecha');
+		$actividad = $this->input->post('actividad');
+		$fila = $this->Model_Tblconsolidado->getByActDiarias($fecha, $actividad);
 		
 		$mensaje = "";
 		$this->index($mensaje, $fila);

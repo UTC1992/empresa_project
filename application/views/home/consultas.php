@@ -6,11 +6,19 @@
 			<?php if($mensaje == "2") { ?>
 				<label class="btn btn-success"><strong>La tabla esta vacía !</strong></label>
 			<?php }?>
-			<form>
-				<div class="input-group" style="width: 300px; ">
-					<button type="submit" class="btn btn-warning">Buscar por fecha:</button>
-					<input class="form-control" style="margin-left: 5px;"  type="text" placeholder="0000-00-00">
+			<form class="col-sm-12" action='<?=base_url()?>Controller_Consolidado/consultarActDiarias' method='post'>
+				
+				<div class="form-control col-sm-5" style="margin-bottom: 5px;">
+					<label>Ingrese la fecha:</label>
+					<input class="form-control" name="fecha" type="text" placeholder="0000-00-00" style="margin-bottom: 5px;">
+					<select class="form-control" name="actividad" style="text-align: center;">
+						<option>Seleccionar</option>
+						<option>10</option>
+						<option>30</option>
+						<option>40</option>
+					</select>
 				</div>
+				<button type="submit" class="btn btn-warning">Buscar</button>
 			</form>
 			<br>
 			<div class="table-responsive">
@@ -32,13 +40,13 @@
 						foreach ($consulta->result() as $row) { 	
 					?>
 						<tr>
-							<td><?= $row->codigo ?></td>
-							<td><?= $row->cuenta ?></td>
-							<td><?= $row->medidor ?></td>
-							<td><?= "".$row->ruta ?></td>
-							<td><?= $row->sector ?></td>
-							<td><?= $row->nombre ?></td>
-							<td><?= $row->referencia ?></td>
+							<td><?= $row->n9cocl ?></td>
+							<td><?= $row->n9cocu ?></td>
+							<td><?= $row->n9meco ?></td>
+							<td><?= "'".$row->n9coru ?></td>
+							<td><?= $row->n9cose ?></td>
+							<td><?= $row->n9nomb ?></td>
+							<td><?= $row->n9refe ?></td>
 						</tr>
 						
 					<?php $num += 1; 

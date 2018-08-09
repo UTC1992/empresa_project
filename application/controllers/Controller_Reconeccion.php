@@ -20,12 +20,13 @@ class Controller_Reconeccion extends CI_Controller {
 		$db_user = 'root';
 		$db_pass = '';
 		
-		$database = 'empresa_db';
-		$table = 'tbl_recmanual';
-		if (!@mysql_connect($db_host, $db_user, $db_pass))
+		$database = "empresa_db";
+		$table = "tbl_recmanual";
+		$coneccion = mysqli_connect($db_host, $db_user, $db_pass);
+		if (!@mysqli_connect($db_host, $db_user, $db_pass))
 			die("No se pudo establecer conexión a la base de datos");
 		
-		if (!@mysql_select_db($database))
+		if (!@mysqli_select_db($coneccion, $database))
 			die("base de datos no existe");
 			if(isset($_POST['submit']))
 			{
@@ -45,7 +46,7 @@ class Controller_Reconeccion extends CI_Controller {
 						//Insertamos los datos con los valores...
 						$sql = "INSERT into tbl_recmanual (datomanual) 
 									values($data[0])";
-						mysql_query($sql) or die('Error: '.mysql_error());
+						mysqli_query($coneccion, $sql) or die('Error: '.mysqli_error());
 					}
 					//cerramos la lectura del archivo "abrir archivo" con un "cerrar archivo"
 					fclose($handle);
@@ -68,6 +69,9 @@ class Controller_Reconeccion extends CI_Controller {
 			}
 	
 	}
+
+	
+
 
 	public function vaciar_tbl_manual()
 	{

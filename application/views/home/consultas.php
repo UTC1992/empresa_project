@@ -119,21 +119,22 @@
 			<div class="table-responsive">
 				<table class="table table-bordered table-condensed table-striped table-sm">
 					<tr>
-						<th rowspan="3" >
+						<th rowspan="4" >
 							<div class="texto-vertical-2">
 								TOTAL DIARIO
 							</div>
-							
 						</th>
-						<th rowspan="3" >
-							<div ng-if="sectorURoRU == 'URBANO' " class="texto-vertical-2">
-								URBANO
+						<th colspan="5" >
+							<div ng-if="sectorURoRU == 'URBANO' " >
+								<center>URBANO</center>
 							</div>
-							<div ng-if="sectorURoRU == 'RURAL' " class="texto-vertical-2">
-								RURAL
+							<div ng-if="sectorURoRU == 'RURAL' " >
+								<center>RURAL</center>
 							</div>
-							
 						</th>
+					</tr>
+					<tr>
+						
 						<th colspan="5"><center>Actividades</center></th>
 					</tr>
 					<tr>

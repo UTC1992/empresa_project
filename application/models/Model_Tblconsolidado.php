@@ -12,6 +12,7 @@
 			$result = $this->db->query("SELECT * from tbl_consolidado 
 										WHERE n9cono = '". $actividad ."' 
 										and n9feco = '" . $fecha . "'
+										and n9leco <> ''
 										and n9leco > 0
 										;");
 			return $result;
@@ -23,6 +24,7 @@
 										from tbl_consolidado, tbl_sector
 										WHERE n9feco = '" . $fecha . "'
 										and n9leco > 0
+										and n9leco <> ''
 										and n9cose = tbl_sector.nombre
 										and tbl_sector.detalle = '".$sectorURoRU."'
 										GROUP by n9cose
@@ -39,23 +41,27 @@
 														WHERE n9feco = '" . $fecha . "' 
 														and n9cose = '".$sector."'
 														and n9leco > 0
+														and n9leco <> ''
 														and n9cono = '010') as Notificacion,
 														(SELECT COUNT(n9cose)
 														FROM tbl_consolidado
 														WHERE n9feco = '" . $fecha . "' 
 														and n9cose = '".$sector."'
 														and n9leco > 0
+														and n9leco <> ''
 														and n9cono = '030') as Corte,
 														(SELECT COUNT(n9cose)
 														FROM tbl_consolidado
 														WHERE n9feco = '" . $fecha . "' 
 														and n9cose = '".$sector."'
 														and n9leco > 0
+														and n9leco <> ''
 														and n9cono = '040') as Reconeccion
 											FROM tbl_consolidado
 											WHERE n9feco = '" . $fecha . "' 
 											and n9cose = '".$sector."'
 											and n9leco > 0
+											and n9leco <> ''
 											GROUP by n9cose
 											HAVING COUNT(n9cose)>0
 											ORDER BY n9cose ASC

@@ -24,6 +24,7 @@
 			$result = $this->db->query("SELECT n9cose
 										from tbl_consolidado, tbl_sector
 										WHERE n9feco = '" . $fecha . "'
+										and n9fech = '" . $fecha . "'
 										and n9leco > 0
 										and n9leco <> ''
 										and n9cose = tbl_sector.nombre
@@ -39,14 +40,16 @@
 		{
 			$result = $this->db->query("SELECT  n9cose, (SELECT COUNT(n9cose)
 														FROM tbl_consolidado
-														WHERE n9feco = '" . $fecha . "' 
+														WHERE n9feco = '" . $fecha . "'
+														and n9fech = '" . $fecha . "' 
 														and n9cose = '".$sector."'
 														and n9leco > 0
 														and n9leco <> ''
 														and n9cono = '010') as Notificacion,
 														(SELECT COUNT(n9cose)
 														FROM tbl_consolidado
-														WHERE n9feco = '" . $fecha . "' 
+														WHERE n9feco = '" . $fecha . "'
+														and n9fech = '" . $fecha . "' 
 														and n9cose = '".$sector."'
 														and n9leco > 0
 														and n9leco <> ''
@@ -54,12 +57,14 @@
 														(SELECT COUNT(n9cose)
 														FROM tbl_consolidado
 														WHERE n9feco = '" . $fecha . "' 
+														and n9fech = '" . $fecha . "'
 														and n9cose = '".$sector."'
 														and n9leco > 0
 														and n9leco <> ''
 														and n9cono = '040') as Reconeccion
 											FROM tbl_consolidado
-											WHERE n9feco = '" . $fecha . "' 
+											WHERE n9feco = '" . $fecha . "'
+											and n9fech = '" . $fecha . "' 
 											and n9cose = '".$sector."'
 											and n9leco > 0
 											and n9leco <> ''

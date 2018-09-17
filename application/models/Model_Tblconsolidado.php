@@ -11,6 +11,7 @@
 
 			$result = $this->db->query("SELECT * from tbl_consolidado 
 										WHERE n9cono = '". $actividad ."' 
+										and n9fech = '" . $fecha . "'
 										and n9feco = '" . $fecha . "'
 										and n9leco <> ''
 										and n9leco > 0

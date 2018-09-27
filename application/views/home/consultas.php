@@ -57,18 +57,16 @@
 				<input type="hidden" id="urlContarActividades" 
 				value="<?=base_url()?>Controller_Consolidado/getContarActividades">
 				<!--formulario para ingresar fecha y codigo de actividad-->
-				<form class="col-sm-12" name="fContarSector" >
+				<form class="col-sm-12" name="fContarSector" ng-submit="contarActividades()">
 					<div class="form-control col-sm-5" style="margin-bottom: 5px;">
 						<label>Ingrese la fecha:</label>
-						<input class="form-control" name="fecha" ng-model="fechaConteo" type="text" placeholder="0000-00-00" 
+						<input class="form-control" name="fecha" ng-model="fechaConteo" 
+						type="text" placeholder="0000-00-00" 
 						style="margin-bottom: 5px;" required>
-						<select class="form-control" name="sectorURoRU" ng-model="sectorURoRU"
-						 style="text-align: center;" ng-change="contarActividades();" required>
-							<option value="">Seleccionar</option>
-							<option value="URBANO">URBANO</option>
-							<option value="RURAL">RURAL</option>
-						</select>
+
+						
 					</div>
+					<button type="submit" class="btn btn-warning">Mostrar conteo</button>
 					<!--<button type="submit" class="btn btn-warning">Buscar</button>-->
 				</form>
 			</fieldset>
@@ -76,14 +74,15 @@
 		<br>
 		<div class="">
 			<fieldset class="form-control" >
-				<div ng-if="mostrarTabla">
+				<div ng-if="mostrarTablas">
+					<h3>URBANOS</h3>
 					<label class="label">Cantidad de Sectores:</label>
-					<input type="text" class="form-control col-sm-2" value="" ng-model="cantidadSector" readonly>
+					<input type="text" class="form-control col-sm-2" value="" ng-model="cantidadSector1" readonly>
 					<br>
 					<div class="table-responsive" >
 						<table  class="table table-bordered table-condensed table-striped table-sm" 
-							ng-table="conteoTable" show-filter="true" style="font-family: calibri; font-size: 12pt;">
-							<tbody ng-if="sectorURoRU == 'URBANO' ">
+							ng-table="conteoTable1" show-filter="true" style="font-family: calibri; font-size: 12pt;">
+							<tbody >
 								<tr ng-repeat="a in $data" ng-init="setTotalUrbano(a)" >
 									<td data-title="'Sector'" filter="{n9cose: 'text'}" sortable="'n9cose'" >'{{ a.n9cose }}</td>
 									<td data-title="'Noticiaciones'" filter="{Notificacion: 'text'}">{{ a.Notificacion }}</td>
@@ -95,8 +94,19 @@
 								</tr>
 								
 							</tbody>
-
-							<tbody  ng-if="sectorURoRU == 'RURAL' " >
+						</table>
+						
+					</div>
+					<br>
+					<h3>RURALES</h3>
+					<label class="label">Cantidad de Sectores:</label>
+					<input type="text" class="form-control col-sm-2" value="" ng-model="cantidadSector2" readonly>
+					<br>
+					<div class="table-responsive" >
+						<table  class="table table-bordered table-condensed table-striped table-sm" 
+							ng-table="conteoTable2" show-filter="true" style="font-family: calibri; font-size: 12pt;">
+							
+							<tbody   >
 									<tr ng-repeat="a in $data"  ng-init="setTotalRural(a)">
 										<td data-title="'Sector'" filter="{n9cose: 'text'}" sortable="'n9cose'" >'{{ a.n9cose }}</td>
 										<td data-title="'Noticiaciones'" filter="{Notificacion: 'text'}">{{ a.Notificacion }}</td>
@@ -116,7 +126,7 @@
 				</div>
 			</fieldset>
 			<br>
-			<div class="table-responsive">
+			<div class="table-responsive" ng-if="mostrarTablas">
 				<table class="table table-bordered table-condensed table-striped table-sm">
 					<tr>
 						<th rowspan="4" >
@@ -125,10 +135,42 @@
 							</div>
 						</th>
 						<th colspan="5" >
-							<div ng-if="sectorURoRU == 'URBANO' " >
+							<div >
 								<center>URBANO</center>
 							</div>
-							<div ng-if="sectorURoRU == 'RURAL' " >
+						</th>
+					</tr>
+					<tr>
+						
+						<th colspan="5"><center>Actividades</center></th>
+					</tr>
+					<tr>
+						<th>NOT</th>
+						<th>CB</th>
+						<th>CP</th>
+						<th>RB</th>
+						<th>RP</th>
+					</tr>
+					<tr>
+						<td>{{ notTotal1 }}</td>
+						<td>{{ cbTotal1 }}</td>
+						<td>{{ cpTotal1 }}</td>
+						<td>{{ rbTotal1 }}</td>
+						<td>{{ rpTotal1 }}</td>
+					</tr>
+				</table>
+			</div>
+
+			<div class="table-responsive" ng-if="mostrarTablas">
+				<table class="table table-bordered table-condensed table-striped table-sm">
+					<tr>
+						<th rowspan="4" >
+							<div class="texto-vertical-2">
+								TOTAL DIARIO
+							</div>
+						</th>
+						<th colspan="5" >
+							<div>
 								<center>RURAL</center>
 							</div>
 						</th>
@@ -145,11 +187,11 @@
 						<th>RP</th>
 					</tr>
 					<tr>
-						<td>{{ notTotal }}</td>
-						<td>{{ cbTotal }}</td>
-						<td>{{ cpTotal }}</td>
-						<td>{{ rbTotal }}</td>
-						<td>{{ rpTotal }}</td>
+						<td>{{ notTotal2 }}</td>
+						<td>{{ cbTotal2 }}</td>
+						<td>{{ cpTotal2 }}</td>
+						<td>{{ rbTotal2 }}</td>
+						<td>{{ rpTotal2 }}</td>
 					</tr>
 				</table>
 			</div>

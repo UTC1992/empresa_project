@@ -19,7 +19,23 @@
 			return $result;
 		}
 
-		public function getConteoPorSector($fecha = '', $sectorURoRU = '')
+		public function getConteoPorSector($fecha = '')
+		{
+				$result = $this->db->query("SELECT n9cose
+										from tbl_consolidado
+										WHERE n9feco = '" . $fecha . "'
+										and n9fech = '" . $fecha . "'
+										and n9leco > 0
+										and n9leco <> ''
+										GROUP by n9cose
+										HAVING COUNT(n9cose)>0
+										ORDER BY n9cose ASC
+										;");
+				return $result;
+			
+		}
+
+		public function getConteoPorSectorCopia($fecha = '', $sectorURoRU = '')
 		{
 			$result = $this->db->query("SELECT n9cose
 										from tbl_consolidado, tbl_sector
@@ -35,45 +51,98 @@
 										;");
 			return $result;
 		}
+		
 
-		public function getConteoSecYAct($fecha = '', $sector = '')
+		public function getConteoSecYActURB($fecha = '', $sector = '')
 		{
 			$result = $this->db->query("SELECT  n9cose, (SELECT COUNT(n9cose)
-														FROM tbl_consolidado
-														WHERE n9feco = '" . $fecha . "'
-														and n9fech = '" . $fecha . "' 
-														and n9cose = '".$sector."'
-														and n9leco > 0
-														and n9leco <> ''
-														and n9cono = '010') as Notificacion,
-														(SELECT COUNT(n9cose)
-														FROM tbl_consolidado
-														WHERE n9feco = '" . $fecha . "'
-														and n9fech = '" . $fecha . "' 
-														and n9cose = '".$sector."'
-														and n9leco > 0
-														and n9leco <> ''
-														and n9cono = '030') as Corte,
-														(SELECT COUNT(n9cose)
-														FROM tbl_consolidado
-														WHERE n9feco = '" . $fecha . "' 
-														and n9fech = '" . $fecha . "'
-														and n9cose = '".$sector."'
-														and n9leco > 0
-														and n9leco <> ''
-														and n9cono = '040') as Reconeccion
-											FROM tbl_consolidado
-											WHERE n9feco = '" . $fecha . "'
-											and n9fech = '" . $fecha . "' 
-											and n9cose = '".$sector."'
-											and n9leco > 0
-											and n9leco <> ''
-											GROUP by n9cose
-											HAVING COUNT(n9cose)>0
-											ORDER BY n9cose ASC
+													FROM tbl_consolidado
+													WHERE n9feco = '" . $fecha . "'
+													and n9fech = '" . $fecha . "' 
+													and n9cose = '".$sector."'
+													and cuclas LIKE 'UR%'
+													and n9leco > 0
+													and n9leco <> ''
+													and n9cono = '010') as Notificacion,
+													(SELECT COUNT(n9cose)
+													FROM tbl_consolidado
+													WHERE n9feco = '" . $fecha . "'
+													and n9fech = '" . $fecha . "' 
+													and n9cose = '".$sector."'
+													and cuclas LIKE 'UR%'
+													and n9leco > 0
+													and n9leco <> ''
+													and n9cono = '030') as Corte,
+													(SELECT COUNT(n9cose)
+													FROM tbl_consolidado
+													WHERE n9feco = '" . $fecha . "' 
+													and n9fech = '" . $fecha . "'
+													and n9cose = '".$sector."'
+													and cuclas LIKE 'UR%'
+													and n9leco > 0
+													and n9leco <> ''
+													and n9cono = '040') as Reconeccion
+										FROM tbl_consolidado
+										WHERE n9feco = '" . $fecha . "'
+										and n9fech = '" . $fecha . "' 
+										and n9cose = '".$sector."'
+										and cuclas LIKE 'UR%'
+										and n9leco > 0
+										and n9leco <> ''
+										GROUP by n9cose
+										HAVING COUNT(n9cose)>0
+										ORDER BY n9cose ASC
 
-										;");
+									;");
 			return $result;
+			
+			
+		}
+
+		public function getConteoSecYActRUR($fecha = '', $sector = '')
+		{
+			
+			$result = $this->db->query("SELECT  n9cose, (SELECT COUNT(n9cose)
+													FROM tbl_consolidado
+													WHERE n9feco = '" . $fecha . "'
+													and n9fech = '" . $fecha . "' 
+													and n9cose = '".$sector."'
+													and cuclas LIKE 'RU%'
+													and n9leco > 0
+													and n9leco <> ''
+													and n9cono = '010') as Notificacion,
+													(SELECT COUNT(n9cose)
+													FROM tbl_consolidado
+													WHERE n9feco = '" . $fecha . "'
+													and n9fech = '" . $fecha . "' 
+													and n9cose = '".$sector."'
+													and cuclas LIKE 'RU%'
+													and n9leco > 0
+													and n9leco <> ''
+													and n9cono = '030') as Corte,
+													(SELECT COUNT(n9cose)
+													FROM tbl_consolidado
+													WHERE n9feco = '" . $fecha . "' 
+													and n9fech = '" . $fecha . "'
+													and n9cose = '".$sector."'
+													and cuclas LIKE 'RU%'
+													and n9leco > 0
+													and n9leco <> ''
+													and n9cono = '040') as Reconeccion
+										FROM tbl_consolidado
+										WHERE n9feco = '" . $fecha . "'
+										and n9fech = '" . $fecha . "' 
+										and n9cose = '".$sector."'
+										and cuclas LIKE 'RU%'
+										and n9leco > 0
+										and n9leco <> ''
+										GROUP by n9cose
+										HAVING COUNT(n9cose)>0
+										ORDER BY n9cose ASC
+
+									;");
+			return $result;
+			
 		}
 
 		function select()

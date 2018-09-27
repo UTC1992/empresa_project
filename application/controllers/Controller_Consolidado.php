@@ -184,24 +184,43 @@ class Controller_Consolidado extends CI_Controller {
 	*/
 	public function getContarActividades()
 	{
-		$datos = array();
+		$datos1 = array();
+		$datos2 = array();
+		$datosTotal = array();
+
 		$fecha = $this->input->post('fecha');
-		$sectorURoRU = $this->input->post('sectorURoRU');
+		//$sectorURoRU = $this->input->post('sectorURoRU');
 		
-		$fila = $this->Model_Tblconsolidado->getConteoPorSector($fecha, $sectorURoRU);
 		
-		//llenamos el arreglo con los datos resultados de la consulta
-		foreach ($fila->result() as $row) {
-			$sec = $row->n9cose;
-			$sectores = $this->Model_Tblconsolidado->getConteoSecYAct($fecha, $sec);
-			foreach($sectores->result_array() as $r){
-				$datos[] = $r;
+			$fila = $this->Model_Tblconsolidado->getConteoPorSector($fecha);
+		
+			//llenamos el arreglo con los datos resultados de la consulta
+			foreach ($fila->result() as $row) {
+				$sec = $row->n9cose;
+				$sectores = $this->Model_Tblconsolidado->getConteoSecYActURB($fecha, $sec);
+				foreach($sectores->result_array() as $r){
+					$datos1[] = $r;
+				}
 			}
-		}
-		//convertimos en datos json nuestros datos
-		$datosActividades = json_encode($datos);
-		//imprimiendo datos asi se puede tomar desde angular ok 
-		echo $datosActividades;
+
+			//llenamos el arreglo con los datos resultados de la consulta
+			foreach ($fila->result() as $row) {
+				$sec = $row->n9cose;
+				$sectores = $this->Model_Tblconsolidado->getConteoSecYActRUR($fecha, $sec);
+				foreach($sectores->result_array() as $r){
+					$datos2[] = $r;
+				}
+			}
+
+			$datosTotal[0] = $datos1;
+			$datosTotal[1] = $datos2;
+
+			//convertimos en datos json nuestros datos
+			$datosActividades = json_encode($datosTotal);
+			//imprimiendo datos asi se puede tomar desde angular ok 
+			echo $datosActividades;
+		
+		
 	}
 	
 }

@@ -53,7 +53,7 @@
 		}
 		
 
-		public function getConteoSecYActURB($fecha = '', $sector = '')
+		public function getConteoSecYActURB($fecha = '', $sector = '', $BP1 = '', $BP2 = '')
 		{
 			$result = $this->db->query("SELECT  n9cose, (SELECT COUNT(n9cose)
 													FROM tbl_consolidado
@@ -70,6 +70,7 @@
 													and n9fech = '" . $fecha . "' 
 													and n9cose = '".$sector."'
 													and cuclas LIKE 'UR%'
+													and n9cobs = '".$BP1."'
 													and n9leco > 0
 													and n9leco <> ''
 													and n9cono = '030') as Corte,
@@ -79,6 +80,7 @@
 													and n9fech = '" . $fecha . "'
 													and n9cose = '".$sector."'
 													and cuclas LIKE 'UR%'
+													and n9cobs = '".$BP2."'
 													and n9leco > 0
 													and n9leco <> ''
 													and n9cono = '040') as Reconeccion
@@ -99,7 +101,7 @@
 			
 		}
 
-		public function getConteoSecYActRUR($fecha = '', $sector = '')
+		public function getConteoSecYActRUR($fecha = '', $sector = '', $BP1 = '', $BP2 = '')
 		{
 			
 			$result = $this->db->query("SELECT  n9cose, (SELECT COUNT(n9cose)
@@ -117,6 +119,7 @@
 													and n9fech = '" . $fecha . "' 
 													and n9cose = '".$sector."'
 													and cuclas LIKE 'RU%'
+													and n9cobs = '".$BP1."'
 													and n9leco > 0
 													and n9leco <> ''
 													and n9cono = '030') as Corte,
@@ -126,6 +129,7 @@
 													and n9fech = '" . $fecha . "'
 													and n9cose = '".$sector."'
 													and cuclas LIKE 'RU%'
+													and n9cobs = '".$BP2."'
 													and n9leco > 0
 													and n9leco <> ''
 													and n9cono = '040') as Reconeccion

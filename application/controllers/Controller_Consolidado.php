@@ -186,6 +186,8 @@ class Controller_Consolidado extends CI_Controller {
 	{
 		$datos1 = array();
 		$datos2 = array();
+		$datos3 = array();
+		$datos4 = array();
 		$datosTotal = array();
 
 		$fecha = $this->input->post('fecha');
@@ -195,32 +197,61 @@ class Controller_Consolidado extends CI_Controller {
 			$fila = $this->Model_Tblconsolidado->getConteoPorSector($fecha);
 		
 			//llenamos el arreglo con los datos resultados de la consulta
+			//BORNERA
 			foreach ($fila->result() as $row) {
 				$sec = $row->n9cose;
-				$sectores = $this->Model_Tblconsolidado->getConteoSecYActURB($fecha, $sec);
+				$CB = "CB";
+				$RB = "RB";
+				$sectores = $this->Model_Tblconsolidado->getConteoSecYActURB($fecha, $sec, $CB, $RB);
 				foreach($sectores->result_array() as $r){
 					$datos1[] = $r;
 				}
 			}
 
-			//llenamos el arreglo con los datos resultados de la consulta
+			//POSTE
 			foreach ($fila->result() as $row) {
 				$sec = $row->n9cose;
-				$sectores = $this->Model_Tblconsolidado->getConteoSecYActRUR($fecha, $sec);
+				$CP = "CP";
+				$RP = "RP";
+				$sectores = $this->Model_Tblconsolidado->getConteoSecYActURB($fecha, $sec, $CP, $RP);
 				foreach($sectores->result_array() as $r){
 					$datos2[] = $r;
 				}
 			}
 
+
+			//llenamos el arreglo con los datos resultados de la consulta
+			//BORNERA
+			foreach ($fila->result() as $row) {
+				$sec = $row->n9cose;
+				$CB = "CB";
+				$RB = "RB";
+				$sectores = $this->Model_Tblconsolidado->getConteoSecYActRUR($fecha, $sec, $CB, $RB);
+				foreach($sectores->result_array() as $r){
+					$datos3[] = $r;
+				}
+			}
+			
+			//POSTE
+			foreach ($fila->result() as $row) {
+				$sec = $row->n9cose;
+				$CP = "CP";
+				$RP = "RP";
+				$sectores = $this->Model_Tblconsolidado->getConteoSecYActRUR($fecha, $sec, $CP, $RP);
+				foreach($sectores->result_array() as $r){
+					$datos4[] = $r;
+				}
+			}
+			
 			$datosTotal[0] = $datos1;
 			$datosTotal[1] = $datos2;
+			$datosTotal[2] = $datos3;
+			$datosTotal[3] = $datos4;
 
 			//convertimos en datos json nuestros datos
 			$datosActividades = json_encode($datosTotal);
 			//imprimiendo datos asi se puede tomar desde angular ok 
 			echo $datosActividades;
-		
-		
 	}
 	
 }

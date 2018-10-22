@@ -12,6 +12,10 @@ app.controller('actividadCtrl', function($scope, $http, $location, $filter, NgTa
 	$scope.cpTotal2 = 0;
 	$scope.rbTotal2 = 0;
 	$scope.rpTotal2 = 0;
+	
+	//arrays para las tablas de conteo de urbano y rural
+	$scope.datos1 = [];
+	$scope.datos2 = [];
 
 	// funcion para consultar las actividades segun los datos enviados
     $scope.consultarActividades = function () {
@@ -79,16 +83,28 @@ app.controller('actividadCtrl', function($scope, $http, $location, $filter, NgTa
 			headers: {'Content-Type': 'application/x-www-form-urlencoded'}
 		})
 		.success(function(response){
-			$scope.datos1 = response[0];
-			$scope.datos2 = response[1];
+			$scope.datos1 = [];
+			$scope.datos2 = [];
+			
+
+			/*console.log("==========> BORNERA");
 			console.log("URBANO");
 			console.log(response[0]);
 			console.log("RURAL");
 			console.log(response[1]);
+			console.log("=========> POSTE");
+			console.log("RURAL");
+			console.log(response[2]);
+			console.log("RURAL");
+			console.log(response[3]);
+			*/
+
+			$scope.crearArrayActividadesURB(response[0],response[1]);
+			$scope.crearArrayActividadesRUR(response[2],response[3]);
 
 			//se asigna la cantidad de registros obtenidos en la consulta
 			$scope.cantidadSector1 = response[0].length;
-			$scope.cantidadSector2 = response[1].length;
+			$scope.cantidadSector2 = response[2].length;
 
 			$scope.conteoTable1 = new NgTableParams(
 				{
@@ -143,24 +159,62 @@ app.controller('actividadCtrl', function($scope, $http, $location, $filter, NgTa
 
 	}
 
+	$scope.crearArrayActividadesURB = function(array1, array2){
+		var datosURB = new Array();
+		for (let i = 0; i < array1.length; i++) {
+			var datosBP1 = {
+				"SECTOR"	:	array1[i]['n9cose'],
+				"NOT"		:	parseInt(array1[i]['Notificacion']),
+				"CB"		: 	parseInt(array1[i]['Corte']),
+				"CP"		: 	parseInt(array2[i]['Corte']),
+				"RB"		: 	parseInt(array1[i]['Reconeccion']),
+				"RP"		:	parseInt(array2[i]['Reconeccion'])
+			};
+			
+			datosURB[i] = datosBP1;
+		}
+		$scope.datos1 = datosURB;
+		console.log('datos de URBANO');
+		console.log($scope.datos1);
+	}
+
+	$scope.crearArrayActividadesRUR = function(array1, array2){
+		var datosURB = new Array();
+		for (let i = 0; i < array1.length; i++) {
+			var datosBP1 = {
+				"SECTOR"	:	array1[i]['n9cose'],
+				"NOT"		:	parseInt(array1[i]['Notificacion']),
+				"CB"		: 	parseInt(array1[i]['Corte']),
+				"CP"		: 	parseInt(array2[i]['Corte']),
+				"RB"		: 	parseInt(array1[i]['Reconeccion']),
+				"RP"		:	parseInt(array2[i]['Reconeccion'])
+			};
+			
+			datosURB[i] = datosBP1;
+		}
+		$scope.datos2 = datosURB;
+		console.log('datos de RURAL');
+		console.log($scope.datos2);
+	}
+
 	//suma de valores diarios de cada actividad
 	$scope.setTotalUrbano = function(item){
         if (item){
-			$scope.notTotal1 += parseInt(item.Notificacion);
-			$scope.cbTotal1 += parseInt(item.Corte);
-			$scope.cpTotal1 = 0;
-			$scope.rbTotal1 += parseInt(item.Reconeccion);
-			$scope.rpTotal1 = 0;
+			$scope.notTotal1 += parseInt(item.NOT);
+			$scope.cbTotal1 += parseInt(item.CB);
+			$scope.cpTotal1 += parseInt(item.CP);
+			$scope.rbTotal1 += parseInt(item.RB);
+			$scope.rpTotal1 += parseInt(item.RP);
         }
 	}
 	
 	$scope.setTotalRural = function(item){
         if (item){
-            $scope.notTotal2 += parseInt(item.Notificacion);
-			$scope.cbTotal2 = 0;
-			$scope.cpTotal2 += parseInt(item.Corte);
-			$scope.rbTotal2 = 0;
-			$scope.rpTotal2 += parseInt(item.Reconeccion);
+            $scope.notTotal2 += parseInt(item.NOT);
+			$scope.cbTotal2 += parseInt(item.CB);
+			$scope.cpTotal2 += parseInt(item.CP);
+			$scope.rbTotal2 += parseInt(item.RB);
+			$scope.rpTotal2 += parseInt(item.RP);
         }
     }
 

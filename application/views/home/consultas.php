@@ -84,12 +84,12 @@
 							ng-table="conteoTable1" show-filter="true" style="font-family: calibri; font-size: 12pt;">
 							<tbody >
 								<tr ng-repeat="a in $data" ng-init="setTotalUrbano(a)" >
-									<td data-title="'Sector'" filter="{n9cose: 'text'}" sortable="'n9cose'" >'{{ a.n9cose }}</td>
-									<td data-title="'Noticiaciones'" filter="{Notificacion: 'text'}">{{ a.Notificacion }}</td>
-									<td data-title="'CB'" filter="{Corte: 'text'}">{{ a.Corte }}</td>
-									<td data-title="'CP'" filter="{Corte: 'text'}">0</td>
-									<td data-title="'RB'" filter="{Reconeccion: 'text'}">{{ a.Reconeccion }}</td>
-									<td data-title="'RP'" filter="{Reconeccion: 'text'}">0</td>
+									<td data-title="'Sector'" filter="{SECTOR: 'text'}" sortable="'SECTOR'" >'{{ a.SECTOR }}</td>
+									<td data-title="'Noticiaciones'" filter="{NOT: 'text'}">{{ a.NOT }}</td>
+									<td data-title="'CB'" filter="{CB: 'text'}">{{ a.CB }}</td>
+									<td data-title="'CP'" filter="{CP: 'text'}">{{ a.CP }}</td>
+									<td data-title="'RB'" filter="{RB: 'text'}">{{ a.RB }}</td>
+									<td data-title="'RP'" filter="{RP: 'text'}">{{ a.RP }}</td>
 										
 								</tr>
 								
@@ -108,12 +108,12 @@
 							
 							<tbody   >
 									<tr ng-repeat="a in $data"  ng-init="setTotalRural(a)">
-										<td data-title="'Sector'" filter="{n9cose: 'text'}" sortable="'n9cose'" >'{{ a.n9cose }}</td>
-										<td data-title="'Noticiaciones'" filter="{Notificacion: 'text'}">{{ a.Notificacion }}</td>
-										<td data-title="'CB'" filter="{Corte: 'text'}">0</td>
-										<td data-title="'CP'" filter="{Corte: 'text'}">{{ a.Corte }}</td>
-										<td data-title="'RB'" filter="{Reconeccion: 'text'}">0</td>
-										<td data-title="'RP'" filter="{Reconeccion: 'text'}">{{ a.Reconeccion }}</td>
+										<td data-title="'Sector'" filter="{SECTOR: 'text'}" sortable="'SECTOR'" >'{{ a.SECTOR }}</td>
+										<td data-title="'Noticiaciones'" filter="{NOT: 'text'}">{{ a.NOT }}</td>
+										<td data-title="'CB'" filter="{CB: 'text'}">{{ a.CB }}</td>
+										<td data-title="'CP'" filter="{CP: 'text'}">{{ a.CP }}</td>
+										<td data-title="'RB'" filter="{RB: 'text'}">{{ a.RB }}</td>
+										<td data-title="'RP'" filter="{RP: 'text'}">{{ a.RP }}</td>
 										
 									</tr>
 								</tbody>

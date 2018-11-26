@@ -83,6 +83,7 @@ app.controller('actividadCtrl', function($scope, $http, $location, $filter, NgTa
 			headers: {'Content-Type': 'application/x-www-form-urlencoded'}
 		})
 		.success(function(response){
+			//console.log(response);
 			$scope.datos1 = [];
 			$scope.datos2 = [];
 			

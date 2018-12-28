@@ -17,6 +17,18 @@
 										and n9leco > 0
 										;");
 			return $result;
+
+			/*para cuando NO SE ENCUENTRE CB CP RB RP 
+			$result = $this->db->query("SELECT * from tbl_consolidado 
+										WHERE n9cono = '". $actividad ."' 
+										and n9fech = '" . $fecha . "'
+										and n9feco = '" . $fecha . "'
+										and n9leco <> ''
+										and n9cobs <> ''
+										and n9leco > 0
+										;");
+			return $result;
+			*/
 		}
 
 		public function getConteoPorSector($fecha = '')

@@ -1,22 +1,10 @@
 $(document).ready(function(){
 	var urlImportar = $('#url').val();
-
-	load_data();
-
-	function load_data()
-	{
-		
-		$.ajax({
-			url:urlImportar+'Controller_Consolidado/load_data',
-			method:"POST",
-			success:function(data)
-			{
-				$('#imported_csv_data').html(data);
-			}
-		})
-	}
+	$('#mensaje').hide();
+	$('#error').hide();
 
 	$('#import_csv').on('submit', function(event){
+		
 		event.preventDefault();
 		$.ajax({
 			url:urlImportar+"Controller_Consolidado/import",
@@ -30,14 +18,23 @@ $(document).ready(function(){
 			},
 			success:function(data)
 			{
+				if(data != ''){
+					$('#error').hide();
+					$('#import_csv')[0].reset();
+					$('#import_csv_btn').attr('disabled', false);
+					$('#import_csv_btn').html('Importar file');
+					$('#mensaje').html('Éxito al subir');
+					$('#mensaje').show();
+				} else {
+					$('#mensaje').hide();
+					$('#import_csv_btn').html('Importar file');
+					$('#error').html('Elija un archivo para subirlo.');
+					$('#error').show();
+				}	
 				
-				$('#import_csv')[0].reset();
-				$('#import_csv_btn').attr('disabled', false);
-				$('#import_csv_btn').html('Import Done');
-				//$('#imported_csv_data').html(data);
-				load_data();
 			}
 		})
+		
 	});
 	
 });

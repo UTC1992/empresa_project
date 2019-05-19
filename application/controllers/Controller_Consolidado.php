@@ -4,13 +4,15 @@ set_time_limit(0);
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
 class Controller_Consolidado extends CI_Controller {
 
 	public function __construct()
 	{
 		parent::__construct();
 		$this->load->model('Model_Tblconsolidado');
-		$this->load->library('csvimport');
 	}
 
 	public function index($mensaje = '', $fila = '')
@@ -51,59 +53,99 @@ class Controller_Consolidado extends CI_Controller {
 		echo $datosActividades;
 	}
 
-	function load_data()
+	public function import()
 	{
-		$result = $this->Model_Tblconsolidado->select();
-		/*
-		$output = '
-		 <h3 align="center">Imported User Details from CSV File</h3>
-        <div class="table-responsive">
-        	<table class="table table-bordered table-striped">
-        		<tr>
-        			<th>Sr. No</th>
-        			<th></th>
-        			<th>Last Name</th>
-        			<th>Phone</th>
-        			<th>Email Address</th>
-        		</tr>
-		';
-		$count = 0;
-		if($result->num_rows() > 0)
-		{
-			foreach($result->result() as $row)
-			{
-				$count = $count + 1;
-				$output .= '
-				<tr>
-					<td>'.$count.'</td>
-					<td>'.$row->first_name.'</td>
-					<td>'.$row->last_name.'</td>
-					<td>'.$row->phone.'</td>
-					<td>'.$row->email.'</td>
-				</tr>
-				';
-			}
-		}
-		else
-		{
-			$output .= '
-			<tr>
-	    		<td colspan="5" align="center">Data not Available</td>
-	    	</tr>
-			';
-		}
-		$output .= '</table></div>';
-		echo $output;
-		*/
-	}
+		$file_mimes = array('text/x-comma-separated-values', 'text/comma-separated-values', 
+		'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 
+		'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'text/plain', 
+		'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 
-	function import()
+		if(isset($_FILES['file_consolidado']['name']) && in_array($_FILES['file_consolidado']['type'], $file_mimes)) 
+		{
+			$arr_file = explode('.', $_FILES['file_consolidado']['name']);
+			$extension = end($arr_file);
+			if('csv' == $extension)
+			{
+				$reader = new \PhpOffice\PhpSpreadsheet\Reader\Csv();
+			} else {
+				$reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+			}
+			$spreadsheet = $reader->load($_FILES['file_consolidado']['tmp_name']);
+			$sheetData = $spreadsheet->getActiveSheet()->toArray();
+			echo "<pre>";
+			//print_r($sheetData);
+
+			$time = time();
+			$fechaActual = date('d-m-Y', $time);
+			$fechaUpdate = "00-00-0000";
+
+			$con=0;
+			$actividadArray=array();
+			
+			array_shift($sheetData);
+
+			foreach($sheetData as $row => $value)
+			{
+				//print_r($value);
+				$actividadArray[$con]['n9sepr']=$value[0];
+				$actividadArray[$con]['n9cono']= $value[1];
+				$actividadArray[$con]['n9cocu']= $value[2];
+				$actividadArray[$con]['n9selo']= $value[3];
+				$actividadArray[$con]['n9cozo']= $value[4];
+				$actividadArray[$con]['n9coag']= $value[5];
+				$actividadArray[$con]['n9cose']= $value[6];
+				$actividadArray[$con]['n9coru']= $value[7];
+				$actividadArray[$con]['n9seru']= $value[8];
+				$actividadArray[$con]['n9vano']= $value[9];
+				$actividadArray[$con]['n9plve']= $value[10];
+				$actividadArray[$con]['n9vaca']= $value[11];
+				$actividadArray[$con]['n9esta']= $value[12];
+				$actividadArray[$con]['n9cocn']= $value[13];
+				$actividadArray[$con]['n9fech']= $value[14];
+				$actividadArray[$con]['n9meco']= $value[15];
+				$actividadArray[$con]['n9seri']= $value[16];
+				$actividadArray[$con]['n9feco']= $value[17];
+				$actividadArray[$con]['n9leco']= $value[18];
+				$actividadArray[$con]['n9manp']= $value[19];
+				$actividadArray[$con]['n9cocl']= $value[20];
+				$actividadArray[$con]['n9nomb']= $value[21];
+				$actividadArray[$con]['n9cedu']= $value[22];
+				$actividadArray[$con]['n9prin']= $value[23];
+				$actividadArray[$con]['n9nrpr']= $value[24];
+				$actividadArray[$con]['n9refe']= $value[25];
+				$actividadArray[$con]['n9tele']= $value[26];
+				$actividadArray[$con]['n9medi']= $value[27];
+				$actividadArray[$con]['n9fecl']= $value[28];
+				$actividadArray[$con]['n9lect']= $value[29];
+				$actividadArray[$con]['n9cobs']= $value[30];
+				$actividadArray[$con]['n9cob2']= $value[31];
+				$actividadArray[$con]['n9ckd1']= $value[32];
+				$actividadArray[$con]['n9ckd2']= $value[33];
+				$actividadArray[$con]['cusecu']= $value[34];
+				$actividadArray[$con]['cupost']= $value[35];
+				$actividadArray[$con]['cucoon']= $value[36];
+				$actividadArray[$con]['cucooe']= $value[37];
+				$actividadArray[$con]['cuclas']= $value[38];
+				$actividadArray[$con]['cuesta']= $value[39];
+				$actividadArray[$con]['cutari']= $value[40];
+				$actividadArray[$con]['createddato']= $fechaActual;
+				$actividadArray[$con]['updatedato']= $fechaUpdate;
+				
+				$con++;
+				//print_r($actividadArray);
+			}
+
+			$this->Model_Tblconsolidado->insert($actividadArray);
+		}
+	}
+	
+	function import2()
 	{
 		$time = time();
 		$fechaActual = date('d-m-Y', $time);
 		$fechaUpdate = "00-00-0000";
 
-		$file_data = $this->csvimport->get_array($_FILES["csv_file"]["tmp_name"]);
+		$file_data = $this->csvimport->get_array($_FILES["file_consolidado"]["tmp_name"]);
 		foreach($file_data as $row)
 		{
 			$data[] = array(

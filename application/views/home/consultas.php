@@ -22,6 +22,20 @@
 					</div>
 					<button type="submit" class="btn btn-warning">Buscar</button>
 				</form>
+				<form class="col-sm-12" name="generarExcel" method="post" action="<?=base_url()?>Controller_Consolidado/generarExcelDetalleMensual" >
+					<div class="form-control col-sm-5" style="margin-bottom: 5px;">
+					<label>Descargar excel:</label>
+						<input class="form-control" name="fecha" ng-model="fecha" type="text" placeholder="0000-00-00" 
+						style="margin-bottom: 5px;" required>
+						<select class="form-control" name="actividad" ng-model="actividad" style="text-align: center;" required>
+							<option value="">Seleccionar</option>
+							<option value="010">010</option>
+							<option value="030">030</option>
+							<option value="040">040</option>
+						</select>
+					</div>
+					<button type="submit" class="btn btn-warning">Buscar</button>
+				</form>
 			</fieldset>
 		</div>
 		<br>

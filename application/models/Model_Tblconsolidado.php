@@ -172,4 +172,17 @@
 		{
 			$this->db->insert_batch('tbl_consolidado', $data);
 		}
+
+		function getFechasMes()
+		{
+			$result = $this->db->query("SELECT n9fech from tbl_consolidado 
+										WHERE n9fech LIKE '201901%' 
+										and n9leco > 0 and n9leco <> ''
+										GROUP by n9fech
+										ORDER BY n9fech ASC
+										;");
+			return $result;
+			
+		}
+
     }

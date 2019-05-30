@@ -67,7 +67,7 @@
 
 		public function getConteoSecYActURB($fecha = '', $sector = '', $BP1 = '', $BP2 = '')
 		{
-			$result = $this->db->query("SELECT  n9cose, (SELECT COUNT(n9cose)
+			$result = $this->db->query("SELECT  n9coag, n9cose, (SELECT COUNT(n9cose)
 													FROM tbl_consolidado
 													WHERE n9feco = '" . $fecha . "'
 													and n9fech = '" . $fecha . "' 
@@ -116,7 +116,7 @@
 		public function getConteoSecYActRUR($fecha = '', $sector = '', $BP1 = '', $BP2 = '')
 		{
 			
-			$result = $this->db->query("SELECT  n9cose, (SELECT COUNT(n9cose)
+			$result = $this->db->query("SELECT  n9coag, n9cose, (SELECT COUNT(n9cose)
 													FROM tbl_consolidado
 													WHERE n9feco = '" . $fecha . "'
 													and n9fech = '" . $fecha . "' 
@@ -176,7 +176,7 @@
 		function getFechasMes()
 		{
 			$result = $this->db->query("SELECT n9fech from tbl_consolidado 
-										WHERE n9fech LIKE '201901%' 
+										WHERE n9fech LIKE '201905%' 
 										and n9leco > 0 and n9leco <> ''
 										GROUP by n9fech
 										ORDER BY n9fech ASC

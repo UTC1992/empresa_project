@@ -16,6 +16,8 @@ app.controller('actividadCtrl', function($scope, $http, $location, $filter, NgTa
 	//arrays para las tablas de conteo de urbano y rural
 	$scope.datos1 = [];
 	$scope.datos2 = [];
+	$scope.datos3 = [];
+	$scope.datos4 = [];
 
 	// funcion para consultar las actividades segun los datos enviados
     $scope.consultarActividades = function () {
@@ -107,6 +109,9 @@ app.controller('actividadCtrl', function($scope, $http, $location, $filter, NgTa
 			$scope.cantidadSector1 = response[0].length;
 			$scope.cantidadSector2 = response[2].length;
 
+			$scope.cantidadSector3 = $scope.datos3.length;
+			$scope.cantidadSector4 = $scope.datos4.length;
+
 			$scope.conteoTable1 = new NgTableParams(
 				{
 					count: 50,
@@ -129,30 +134,74 @@ app.controller('actividadCtrl', function($scope, $http, $location, $filter, NgTa
 					
 				});
 
-				$scope.conteoTable2 = new NgTableParams(
-					{
-						count: 50,
-						sorting: {
-						id_con: 'asc'     // initial sorting
+			$scope.conteoTable2 = new NgTableParams(
+				{
+					count: 50,
+					sorting: {
+					id_con: 'asc'     // initial sorting
+				}
+				}, {
+					counts: [50, 1000],
+					getData: function (params) {
+						$scope.data = params.filter() ? 
+						$filter('filter')($scope.datos2, params.filter()) : $scope.datos2;
+	
+						var orderedData = params.sorting() ?
+						$filter('orderBy')($scope.data, params.orderBy()) : $scope.datos2;
+	
+						params.total(orderedData.length);
+						$scope.data = orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count());
+						return $scope.data;
 					}
-					}, {
-						counts: [50, 1000],
-						getData: function (params) {
-							$scope.data = params.filter() ? 
-							$filter('filter')($scope.datos2, params.filter()) : $scope.datos2;
-		
-							var orderedData = params.sorting() ?
-							$filter('orderBy')($scope.data, params.orderBy()) : $scope.datos2;
-		
-							params.total(orderedData.length);
-							$scope.data = orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count());
-							return $scope.data;
-						}
-						
-					});
-				
-				$scope.mostrarTablas = true;
-				$scope.cargando = false;
+					
+				});
+
+			$scope.conteoTable3 = new NgTableParams(
+				{
+					count: 50,
+					sorting: {
+					id_con: 'asc'     // initial sorting
+				}
+				}, {
+					counts: [50, 1000],
+					getData: function (params) {
+						$scope.data = params.filter() ? 
+						$filter('filter')($scope.datos3, params.filter()) : $scope.datos3;
+	
+						var orderedData = params.sorting() ?
+						$filter('orderBy')($scope.data, params.orderBy()) : $scope.datos3;
+	
+						params.total(orderedData.length);
+						$scope.data = orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count());
+						return $scope.data;
+					}
+					
+				});
+
+			$scope.conteoTable4 = new NgTableParams(
+				{
+					count: 50,
+					sorting: {
+					id_con: 'asc'     // initial sorting
+				}
+				}, {
+					counts: [50, 1000],
+					getData: function (params) {
+						$scope.data = params.filter() ? 
+						$filter('filter')($scope.datos4, params.filter()) : $scope.datos4;
+	
+						var orderedData = params.sorting() ?
+						$filter('orderBy')($scope.data, params.orderBy()) : $scope.datos4;
+	
+						params.total(orderedData.length);
+						$scope.data = orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count());
+						return $scope.data;
+					}
+					
+				});
+			
+			$scope.mostrarTablas = true;
+			$scope.cargando = false;
 				
 		}, function (error) {
 			console.log(error);
@@ -162,40 +211,74 @@ app.controller('actividadCtrl', function($scope, $http, $location, $filter, NgTa
 
 	$scope.crearArrayActividadesURB = function(array1, array2){
 		var datosURB = new Array();
+		var datosURB2 = new Array();
 		for (let i = 0; i < array1.length; i++) {
-			var datosBP1 = {
-				"SECTOR"	:	array1[i]['n9cose'],
-				"NOT"		:	parseInt(array1[i]['Notificacion']),
-				"CB"		: 	parseInt(array1[i]['Corte']),
-				"CP"		: 	parseInt(array2[i]['Corte']),
-				"RB"		: 	parseInt(array1[i]['Reconeccion']),
-				"RP"		:	parseInt(array2[i]['Reconeccion'])
-			};
+			if(parseInt(array1[i]['n9coag']) != 6 
+			&& parseInt(array1[i]['n9coag']) != 95
+			&& parseInt(array1[i]['n9coag']) != 7){
+				var datosBP1 = {
+					"SECTOR"	:	array1[i]['n9cose'],
+					"NOT"		:	parseInt(array1[i]['Notificacion']),
+					"CB"		: 	parseInt(array1[i]['Corte']),
+					"CP"		: 	parseInt(array2[i]['Corte']),
+					"RB"		: 	parseInt(array1[i]['Reconeccion']),
+					"RP"		:	parseInt(array2[i]['Reconeccion'])
+				};
+				datosURB[i] = datosBP1;
+			} else {
+				var datosBP1 = {
+					"SECTOR"	:	array1[i]['n9cose'],
+					"NOT"		:	parseInt(array1[i]['Notificacion']),
+					"CB"		: 	parseInt(array1[i]['Corte']),
+					"CP"		: 	parseInt(array2[i]['Corte']),
+					"RB"		: 	parseInt(array1[i]['Reconeccion']),
+					"RP"		:	parseInt(array2[i]['Reconeccion'])
+				};
+				datosURB2[i] = datosBP1;
+			}
 			
-			datosURB[i] = datosBP1;
 		}
 		$scope.datos1 = datosURB;
+		$scope.datos3 = datosURB2;
 		console.log('datos de URBANO');
 		console.log($scope.datos1);
+		console.log($scope.datos3);
 	}
 
 	$scope.crearArrayActividadesRUR = function(array1, array2){
 		var datosURB = new Array();
+		var datosURB2 = new Array();
 		for (let i = 0; i < array1.length; i++) {
-			var datosBP1 = {
-				"SECTOR"	:	array1[i]['n9cose'],
-				"NOT"		:	parseInt(array1[i]['Notificacion']),
-				"CB"		: 	parseInt(array1[i]['Corte']),
-				"CP"		: 	parseInt(array2[i]['Corte']),
-				"RB"		: 	parseInt(array1[i]['Reconeccion']),
-				"RP"		:	parseInt(array2[i]['Reconeccion'])
-			};
+			if(parseInt(array1[i]['n9coag']) != 6 
+			&& parseInt(array1[i]['n9coag']) != 95
+			&& parseInt(array1[i]['n9coag']) != 7){
+				var datosBP1 = {
+					"SECTOR"	:	array1[i]['n9cose'],
+					"NOT"		:	parseInt(array1[i]['Notificacion']),
+					"CB"		: 	parseInt(array1[i]['Corte']),
+					"CP"		: 	parseInt(array2[i]['Corte']),
+					"RB"		: 	parseInt(array1[i]['Reconeccion']),
+					"RP"		:	parseInt(array2[i]['Reconeccion'])
+				};
+				datosURB[i] = datosBP1;
+			} else {
+				var datosBP1 = {
+					"SECTOR"	:	array1[i]['n9cose'],
+					"NOT"		:	parseInt(array1[i]['Notificacion']),
+					"CB"		: 	parseInt(array1[i]['Corte']),
+					"CP"		: 	parseInt(array2[i]['Corte']),
+					"RB"		: 	parseInt(array1[i]['Reconeccion']),
+					"RP"		:	parseInt(array2[i]['Reconeccion'])
+				};
+				datosURB2[i] = datosBP1;
+			}
 			
-			datosURB[i] = datosBP1;
 		}
 		$scope.datos2 = datosURB;
+		$scope.datos4 = datosURB2;
 		console.log('datos de RURAL');
 		console.log($scope.datos2);
+		console.log($scope.datos4);
 	}
 
 	//suma de valores diarios de cada actividad

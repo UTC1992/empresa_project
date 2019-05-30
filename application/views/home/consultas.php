@@ -89,7 +89,7 @@
 		<div class="">
 			<fieldset class="form-control" >
 				<div ng-if="mostrarTablas">
-					<h3>URBANOS</h3>
+					<h5>URBANOS contrato 1</h5>
 					<label class="label">Cantidad de Sectores:</label>
 					<input type="text" class="form-control col-sm-2" value="" ng-model="cantidadSector1" readonly>
 					<br>
@@ -111,14 +111,65 @@
 						</table>
 						
 					</div>
-					<br>
-					<h3>RURALES</h3>
+					<h5>RURALES contrato 1</h5>
 					<label class="label">Cantidad de Sectores:</label>
 					<input type="text" class="form-control col-sm-2" value="" ng-model="cantidadSector2" readonly>
 					<br>
 					<div class="table-responsive" >
 						<table  class="table table-bordered table-condensed table-striped table-sm" 
 							ng-table="conteoTable2" show-filter="true" style="font-family: calibri; font-size: 12pt;">
+							
+							<tbody   >
+									<tr ng-repeat="a in $data"  ng-init="setTotalRural(a)">
+										<td data-title="'Sector'" filter="{SECTOR: 'text'}" sortable="'SECTOR'" >'{{ a.SECTOR }}</td>
+										<td data-title="'Noticiaciones'" filter="{NOT: 'text'}">{{ a.NOT }}</td>
+										<td data-title="'CB'" filter="{CB: 'text'}">{{ a.CB }}</td>
+										<td data-title="'CP'" filter="{CP: 'text'}">{{ a.CP }}</td>
+										<td data-title="'RB'" filter="{RB: 'text'}">{{ a.RB }}</td>
+										<td data-title="'RP'" filter="{RP: 'text'}">{{ a.RP }}</td>
+										
+									</tr>
+								</tbody>
+						</table>
+						
+					</div>
+				</div>
+				<div>
+					<img ng-if="cargando" src="<?= base_url() ?>public/img/cargandoAngular.gif" >
+				</div>
+			</fieldset>
+			<br>
+			<fieldset class="form-control" >
+				<div ng-if="mostrarTablas">
+					<h5>URBANOS contrato 2</h5>
+					<label class="label">Cantidad de Sectores:</label>
+					<input type="text" class="form-control col-sm-2" value="" ng-model="cantidadSector3" readonly>
+					<br>
+					<div class="table-responsive" >
+						<table  class="table table-bordered table-condensed table-striped table-sm" 
+							ng-table="conteoTable3" show-filter="true" style="font-family: calibri; font-size: 12pt;">
+							<tbody >
+								<tr ng-repeat="a in $data" ng-init="setTotalUrbano(a)" >
+									<td data-title="'Sector'" filter="{SECTOR: 'text'}" sortable="'SECTOR'" >'{{ a.SECTOR }}</td>
+									<td data-title="'Noticiaciones'" filter="{NOT: 'text'}">{{ a.NOT }}</td>
+									<td data-title="'CB'" filter="{CB: 'text'}">{{ a.CB }}</td>
+									<td data-title="'CP'" filter="{CP: 'text'}">{{ a.CP }}</td>
+									<td data-title="'RB'" filter="{RB: 'text'}">{{ a.RB }}</td>
+									<td data-title="'RP'" filter="{RP: 'text'}">{{ a.RP }}</td>
+										
+								</tr>
+								
+							</tbody>
+						</table>
+						
+					</div>
+					<h5>RURALES contrato 2</h5>
+					<label class="label">Cantidad de Sectores:</label>
+					<input type="text" class="form-control col-sm-2" value="" ng-model="cantidadSector4" readonly>
+					<br>
+					<div class="table-responsive" >
+						<table  class="table table-bordered table-condensed table-striped table-sm" 
+							ng-table="conteoTable4" show-filter="true" style="font-family: calibri; font-size: 12pt;">
 							
 							<tbody   >
 									<tr ng-repeat="a in $data"  ng-init="setTotalRural(a)">

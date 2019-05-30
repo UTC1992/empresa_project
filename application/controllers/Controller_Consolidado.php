@@ -360,53 +360,56 @@ class Controller_Consolidado extends CI_Controller {
 			
 				foreach ($datos1 as $key => $value) 
 				{	
-					$dataNOT[$cont_not]["N"]=$cont_not+1;
-					$dataNOT[$cont_not]["n9cocl"]=$value['n9cocl'];
-					$dataNOT[$cont_not]["n9cocu"]=$value['n9cocu'];
-					$dataNOT[$cont_not]["n9meco"]=$value['n9meco'];
-					$dataNOT[$cont_not]["n9coru"]=$value['n9coru'];
-					$dataNOT[$cont_not]["n9cose"]=$value['n9cose'];
-					$dataNOT[$cont_not]["n9nomb"]=$value['n9nomb'];
-					$dataNOT[$cont_not]["n9refe"]=$value['n9refe'];
-					$cont_not++;
+					if($value['n9coag'] == 6 || $value['n9coag'] == 95 || $value['n9coag'] == 7 ){
+						$dataNOT[$cont_not]["N"]=$cont_not+1;
+						$dataNOT[$cont_not]["n9coag"]=$value['n9coag'];
+						$dataNOT[$cont_not]["n9cocl"]=$value['n9cocl'];
+						$dataNOT[$cont_not]["n9cocu"]=$value['n9cocu'];
+						$dataNOT[$cont_not]["n9meco"]=$value['n9meco'];
+						$dataNOT[$cont_not]["n9coru"]=$value['n9coru'];
+						$dataNOT[$cont_not]["n9cose"]=$value['n9cose'];
+						$dataNOT[$cont_not]["n9nomb"]=$value['n9nomb'];
+						$dataNOT[$cont_not]["n9refe"]=$value['n9refe'];
+						$cont_not++;
+					}
 					
 				}
 				
 				foreach ($datos2 as $key => $value) 
 				{	
-					$dataCOR[$cont_cor]["N"]=$cont_cor+1;
-					$dataCOR[$cont_cor]["n9cocl"]=$value['n9cocl'];
-					$dataCOR[$cont_cor]["n9cocu"]=$value['n9cocu'];
-					$dataCOR[$cont_cor]["n9meco"]=$value['n9meco'];
-					$dataCOR[$cont_cor]["n9coru"]=$value['n9coru'];
-					$dataCOR[$cont_cor]["n9cose"]=$value['n9cose'];
-					$dataCOR[$cont_cor]["n9nomb"]=$value['n9nomb'];
-					$dataCOR[$cont_cor]["n9refe"]=$value['n9refe'];
-					$cont_cor++;
-					
+					if($value['n9coag'] == 6 || $value['n9coag'] == 95 || $value['n9coag'] == 7 ){
+						$dataCOR[$cont_cor]["N"]=$cont_cor+1;
+						$dataCOR[$cont_cor]["n9coag"]=$value['n9coag'];
+						$dataCOR[$cont_cor]["n9cocl"]=$value['n9cocl'];
+						$dataCOR[$cont_cor]["n9cocu"]=$value['n9cocu'];
+						$dataCOR[$cont_cor]["n9meco"]=$value['n9meco'];
+						$dataCOR[$cont_cor]["n9coru"]=$value['n9coru'];
+						$dataCOR[$cont_cor]["n9cose"]=$value['n9cose'];
+						$dataCOR[$cont_cor]["n9nomb"]=$value['n9nomb'];
+						$dataCOR[$cont_cor]["n9refe"]=$value['n9refe'];
+						$cont_cor++;
+					}
 				}
 
 				foreach ($datos3 as $key => $value) 
 				{	
-					$dataREC[$cont_rec]["N"]=$cont_rec+1;
-					$dataREC[$cont_rec]["n9cocl"]=$value['n9cocl'];
-					$dataREC[$cont_rec]["n9cocu"]=$value['n9cocu'];
-					$dataREC[$cont_rec]["n9meco"]=$value['n9meco'];
-					$dataREC[$cont_rec]["n9coru"]=$value['n9coru'];
-					$dataREC[$cont_rec]["n9cose"]=$value['n9cose'];
-					$dataREC[$cont_rec]["n9nomb"]=$value['n9nomb'];
-					$dataREC[$cont_rec]["n9refe"]=$value['n9refe'];
-					$cont_rec++;
-					
+					if($value['n9coag'] == 6 || $value['n9coag'] == 95 || $value['n9coag'] == 7 ){
+						$dataREC[$cont_rec]["N"]=$cont_rec+1;
+						$dataREC[$cont_rec]["n9coag"]=$value['n9coag'];
+						$dataREC[$cont_rec]["n9cocl"]=$value['n9cocl'];
+						$dataREC[$cont_rec]["n9cocu"]=$value['n9cocu'];
+						$dataREC[$cont_rec]["n9meco"]=$value['n9meco'];
+						$dataREC[$cont_rec]["n9coru"]=$value['n9coru'];
+						$dataREC[$cont_rec]["n9cose"]=$value['n9cose'];
+						$dataREC[$cont_rec]["n9nomb"]=$value['n9nomb'];
+						$dataREC[$cont_rec]["n9refe"]=$value['n9refe'];
+						$cont_rec++;
+					}
 				}
 				
 				$spreadsheet->getActiveSheet()->setTitle("S$indexSheet");
-				$spreadsheet->getActiveSheet()->getStyle('H2')->getAlignment()->setWrapText(true);
 				$spreadsheet->getActiveSheet()->getColumnDimension('H')->setWidth(40);
-				$spreadsheet->getActiveSheet()->getColumnDimension('G')->setWidth(40);
-				$spreadsheet->getActiveSheet()->mergeCells('A1:H1');
-				$spreadsheet->getActiveSheet()->getStyle('A1')
-				->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+				$spreadsheet->getActiveSheet()->getColumnDimension('I')->setWidth(40);
 
 				$styleArray = [
 					'borders' => [
@@ -419,20 +422,24 @@ class Controller_Consolidado extends CI_Controller {
 
 				$x=0;
 				if(count($dataNOT)>0){
-					$spreadsheet->getActiveSheet()->getStyle("A1:H1")
+					$spreadsheet->getActiveSheet()->mergeCells('A1:I1');
+					$spreadsheet->getActiveSheet()->getStyle("A1:I1")
 						->applyFromArray($styleArray);
 					$spreadsheet->setActiveSheetIndex($indexSheet)
 								->setCellValue("A1","NOTIFICACIONES");
-
+					$spreadsheet->getActiveSheet()->getStyle("A1")
+					->getAlignment()
+					->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
 					$spreadsheet->setActiveSheetIndex($indexSheet)
 								->setCellValue("A2",'N°')
-								->setCellValue("B2",'CLIENTE')
-								->setCellValue("C2",'CUENTA')
-								->setCellValue("D2",'MEDIDOR')
-								->setCellValue("E2",'RUTA')
-								->setCellValue("F2",'SECTOR')
-								->setCellValue("G2",'NOMBRE')
-								->setCellValue("H2",'DIRECCION');
+								->setCellValue("B2",'AGENCIA')
+								->setCellValue("C2",'CLIENTE')
+								->setCellValue("D2",'CUENTA')
+								->setCellValue("E2",'MEDIDOR')
+								->setCellValue("F2",'RUTA')
+								->setCellValue("G2",'SECTOR')
+								->setCellValue("H2",'NOMBRE')
+								->setCellValue("I2",'DIRECCION');
 					$spreadsheet->getActiveSheet()->getStyle("A2")
 					->applyFromArray($styleArray);
 					$spreadsheet->getActiveSheet()->getStyle("B2")
@@ -449,22 +456,25 @@ class Controller_Consolidado extends CI_Controller {
 					->applyFromArray($styleArray);
 					$spreadsheet->getActiveSheet()->getStyle("H2")
 					->applyFromArray($styleArray);
+					$spreadsheet->getActiveSheet()->getStyle("I2")
+					->applyFromArray($styleArray);
 
 					$x= 3;
 					foreach($dataNOT as $item){
 						$spreadsheet->setActiveSheetIndex($indexSheet)
 								->setCellValue("A$x",$item["N"])
-								->setCellValue("B$x",$item["n9cocl"])
-								->setCellValue("C$x",$item["n9cocu"])
-								->setCellValue("D$x",$item["n9meco"])
-								->setCellValue("E$x",$item["n9coru"])
-								->setCellValue("F$x",$item["n9cose"])
-								->setCellValue("G$x",$item["n9nomb"])
-								->setCellValue("H$x",$item["n9refe"]);
+								->setCellValue("B$x",$item["n9coag"])
+								->setCellValue("C$x",$item["n9cocl"])
+								->setCellValue("D$x",$item["n9cocu"])
+								->setCellValue("E$x",$item["n9meco"])
+								->setCellValue("F$x",$item["n9coru"])
+								->setCellValue("G$x",$item["n9cose"])
+								->setCellValue("H$x",$item["n9nomb"])
+								->setCellValue("I$x",$item["n9refe"]);
 						//ajustar texto
-						$spreadsheet->getActiveSheet()->getStyle("G$x")
-								->getAlignment()->setWrapText(true);
 						$spreadsheet->getActiveSheet()->getStyle("H$x")
+								->getAlignment()->setWrapText(true);
+						$spreadsheet->getActiveSheet()->getStyle("I$x")
 								->getAlignment()->setWrapText(true);
 						//delinear bordes
 						$spreadsheet->getActiveSheet()->getStyle("A$x")
@@ -485,13 +495,15 @@ class Controller_Consolidado extends CI_Controller {
 						->applyFromArray($styleArray);
 						$spreadsheet->getActiveSheet()->getStyle("H$x")
 						->applyFromArray($styleArray);
+						$spreadsheet->getActiveSheet()->getStyle("I$x")
+						->applyFromArray($styleArray);
 
 					$x++;
 					}
 				}
 			
 				if(count($dataCOR)>0){
-					$spreadsheet->getActiveSheet()->mergeCells("A$x:H$x");
+					$spreadsheet->getActiveSheet()->mergeCells("A$x:I$x");
 					$spreadsheet->getActiveSheet()->getStyle("A$x")
 						->applyFromArray($styleArray);
 					$spreadsheet->getActiveSheet()->getStyle("A$x")
@@ -502,13 +514,14 @@ class Controller_Consolidado extends CI_Controller {
 					$x++;
 					$spreadsheet->setActiveSheetIndex($indexSheet)
 								->setCellValue("A$x",'N°')
-								->setCellValue("B$x",'CLIENTE')
-								->setCellValue("C$x",'CUENTA')
-								->setCellValue("D$x",'MEDIDOR')
-								->setCellValue("E$x",'RUTA')
-								->setCellValue("F$x",'SECTOR')
-								->setCellValue("G$x",'NOMBRE')
-								->setCellValue("H$x",'DIRECCION');
+								->setCellValue("B$x",'AGENCIA')
+								->setCellValue("C$x",'CLIENTE')
+								->setCellValue("D$x",'CUENTA')
+								->setCellValue("E$x",'MEDIDOR')
+								->setCellValue("F$x",'RUTA')
+								->setCellValue("G$x",'SECTOR')
+								->setCellValue("H$x",'NOMBRE')
+								->setCellValue("I$x",'DIRECCION');
 					$spreadsheet->getActiveSheet()->getStyle("A$x")
 					->applyFromArray($styleArray);
 					$spreadsheet->getActiveSheet()->getStyle("B$x")
@@ -525,22 +538,25 @@ class Controller_Consolidado extends CI_Controller {
 					->applyFromArray($styleArray);
 					$spreadsheet->getActiveSheet()->getStyle("H$x")
 					->applyFromArray($styleArray);
+					$spreadsheet->getActiveSheet()->getStyle("I$x")
+					->applyFromArray($styleArray);
 
 					$x++;
 					foreach($dataCOR as $item){
 						$spreadsheet->setActiveSheetIndex($indexSheet)
 								->setCellValue("A$x",$item["N"])
-								->setCellValue("B$x",$item["n9cocl"])
-								->setCellValue("C$x",$item["n9cocu"])
-								->setCellValue("D$x",$item["n9meco"])
-								->setCellValue("E$x",$item["n9coru"])
-								->setCellValue("F$x",$item["n9cose"])
-								->setCellValue("G$x",$item["n9nomb"])
-								->setCellValue("H$x",$item["n9refe"]);
+								->setCellValue("B$x",$item["n9coag"])
+								->setCellValue("C$x",$item["n9cocl"])
+								->setCellValue("D$x",$item["n9cocu"])
+								->setCellValue("E$x",$item["n9meco"])
+								->setCellValue("F$x",$item["n9coru"])
+								->setCellValue("G$x",$item["n9cose"])
+								->setCellValue("H$x",$item["n9nomb"])
+								->setCellValue("I$x",$item["n9refe"]);
 						//ajustar texto
-						$spreadsheet->getActiveSheet()->getStyle("G$x")
-								->getAlignment()->setWrapText(true);
 						$spreadsheet->getActiveSheet()->getStyle("H$x")
+								->getAlignment()->setWrapText(true);
+						$spreadsheet->getActiveSheet()->getStyle("I$x")
 								->getAlignment()->setWrapText(true);
 						//delinear bordes
 						$spreadsheet->getActiveSheet()->getStyle("A$x")
@@ -561,13 +577,15 @@ class Controller_Consolidado extends CI_Controller {
 						->applyFromArray($styleArray);
 						$spreadsheet->getActiveSheet()->getStyle("H$x")
 						->applyFromArray($styleArray);
+						$spreadsheet->getActiveSheet()->getStyle("I$x")
+						->applyFromArray($styleArray);
 
 					$x++;
 					}
 				}
 			
 				if(count($dataREC)>0){
-					$spreadsheet->getActiveSheet()->mergeCells("A$x:H$x");
+					$spreadsheet->getActiveSheet()->mergeCells("A$x:I$x");
 					$spreadsheet->getActiveSheet()->getStyle("A$x")
 						->applyFromArray($styleArray);
 					$spreadsheet->getActiveSheet()->getStyle("A$x")
@@ -578,13 +596,14 @@ class Controller_Consolidado extends CI_Controller {
 					$x++;
 					$spreadsheet->setActiveSheetIndex($indexSheet)
 								->setCellValue("A$x",'N°')
-								->setCellValue("B$x",'CLIENTE')
-								->setCellValue("C$x",'CUENTA')
-								->setCellValue("D$x",'MEDICOR')
-								->setCellValue("E$x",'RUTA')
-								->setCellValue("F$x",'SECTOR')
-								->setCellValue("G$x",'NOMBRE')
-								->setCellValue("H$x",'DIRECCION');
+								->setCellValue("B$x",'AGENCIA')
+								->setCellValue("C$x",'CLIENTE')
+								->setCellValue("D$x",'CUENTA')
+								->setCellValue("E$x",'MEDIDOR')
+								->setCellValue("F$x",'RUTA')
+								->setCellValue("G$x",'SECTOR')
+								->setCellValue("H$x",'NOMBRE')
+								->setCellValue("I$x",'DIRECCION');
 					$spreadsheet->getActiveSheet()->getStyle("A$x")
 					->applyFromArray($styleArray);
 					$spreadsheet->getActiveSheet()->getStyle("B$x")
@@ -601,22 +620,25 @@ class Controller_Consolidado extends CI_Controller {
 					->applyFromArray($styleArray);
 					$spreadsheet->getActiveSheet()->getStyle("H$x")
 					->applyFromArray($styleArray);
+					$spreadsheet->getActiveSheet()->getStyle("I$x")
+					->applyFromArray($styleArray);
 
 					$x++;
 					foreach($dataREC as $item){
 						$spreadsheet->setActiveSheetIndex($indexSheet)
 								->setCellValue("A$x",$item["N"])
-								->setCellValue("B$x",$item["n9cocl"])
-								->setCellValue("C$x",$item["n9cocu"])
-								->setCellValue("D$x",$item["n9meco"])
-								->setCellValue("E$x",$item["n9coru"])
-								->setCellValue("F$x",$item["n9cose"])
-								->setCellValue("G$x",$item["n9nomb"])
-								->setCellValue("H$x",$item["n9refe"]);
+								->setCellValue("B$x",$item["n9coag"])
+								->setCellValue("C$x",$item["n9cocl"])
+								->setCellValue("D$x",$item["n9cocu"])
+								->setCellValue("E$x",$item["n9meco"])
+								->setCellValue("F$x",$item["n9coru"])
+								->setCellValue("G$x",$item["n9cose"])
+								->setCellValue("H$x",$item["n9nomb"])
+								->setCellValue("I$x",$item["n9refe"]);
 						//ajustar texto
-						$spreadsheet->getActiveSheet()->getStyle("G$x")
-								->getAlignment()->setWrapText(true);
 						$spreadsheet->getActiveSheet()->getStyle("H$x")
+								->getAlignment()->setWrapText(true);
+						$spreadsheet->getActiveSheet()->getStyle("I$x")
 								->getAlignment()->setWrapText(true);
 						//delinear bordes
 						$spreadsheet->getActiveSheet()->getStyle("A$x")
@@ -636,6 +658,8 @@ class Controller_Consolidado extends CI_Controller {
 						$spreadsheet->getActiveSheet()->getStyle("G$x")
 						->applyFromArray($styleArray);
 						$spreadsheet->getActiveSheet()->getStyle("H$x")
+						->applyFromArray($styleArray);
+						$spreadsheet->getActiveSheet()->getStyle("I$x")
 						->applyFromArray($styleArray);
 
 					$x++;

@@ -98,6 +98,7 @@
 							ng-table="conteoTable1" show-filter="true" style="font-family: calibri; font-size: 12pt;">
 							<tbody >
 								<tr ng-repeat="a in $data" ng-init="setTotalUrbano(a)" >
+									<td data-title="'Agencia'" filter="{AGENCIA: 'text'}" sortable="'AGENCIA'" >'{{ a.AGENCIA }}</td>
 									<td data-title="'Sector'" filter="{SECTOR: 'text'}" sortable="'SECTOR'" >'{{ a.SECTOR }}</td>
 									<td data-title="'Noticiaciones'" filter="{NOT: 'text'}">{{ a.NOT }}</td>
 									<td data-title="'CB'" filter="{CB: 'text'}">{{ a.CB }}</td>
@@ -121,6 +122,7 @@
 							
 							<tbody   >
 									<tr ng-repeat="a in $data"  ng-init="setTotalRural(a)">
+										<td data-title="'Agencia'" filter="{AGENCIA: 'text'}" sortable="'AGENCIA'" >'{{ a.AGENCIA }}</td>
 										<td data-title="'Sector'" filter="{SECTOR: 'text'}" sortable="'SECTOR'" >'{{ a.SECTOR }}</td>
 										<td data-title="'Noticiaciones'" filter="{NOT: 'text'}">{{ a.NOT }}</td>
 										<td data-title="'CB'" filter="{CB: 'text'}">{{ a.CB }}</td>
@@ -150,6 +152,7 @@
 							ng-table="conteoTable3" show-filter="true" style="font-family: calibri; font-size: 12pt;">
 							<tbody >
 								<tr ng-repeat="a in $data" ng-init="setTotalUrbano(a)" >
+									<td data-title="'Agencia'" filter="{AGENCIA: 'text'}" sortable="'AGENCIA'" >'{{ a.AGENCIA }}</td>
 									<td data-title="'Sector'" filter="{SECTOR: 'text'}" sortable="'SECTOR'" >'{{ a.SECTOR }}</td>
 									<td data-title="'Noticiaciones'" filter="{NOT: 'text'}">{{ a.NOT }}</td>
 									<td data-title="'CB'" filter="{CB: 'text'}">{{ a.CB }}</td>
@@ -173,6 +176,7 @@
 							
 							<tbody   >
 									<tr ng-repeat="a in $data"  ng-init="setTotalRural(a)">
+										<td data-title="'Agencia'" filter="{AGENCIA: 'text'}" sortable="'AGENCIA'" >'{{ a.AGENCIA }}</td>
 										<td data-title="'Sector'" filter="{SECTOR: 'text'}" sortable="'SECTOR'" >'{{ a.SECTOR }}</td>
 										<td data-title="'Noticiaciones'" filter="{NOT: 'text'}">{{ a.NOT }}</td>
 										<td data-title="'CB'" filter="{CB: 'text'}">{{ a.CB }}</td>

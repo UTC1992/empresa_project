@@ -65,13 +65,14 @@
 		}
 		
 
-		public function getConteoSecYActURB($fecha = '', $sector = '', $BP1 = '', $BP2 = '')
+		public function getConteoSecYActURB($fecha = '', $sector = '', $BP1 = '', $BP2 = '', $agencia = '')
 		{
 			$result = $this->db->query("SELECT  n9coag, n9cose, (SELECT COUNT(n9cose)
 													FROM tbl_consolidado
 													WHERE n9feco = '" . $fecha . "'
 													and n9fech = '" . $fecha . "' 
 													and n9cose = '".$sector."'
+													and n9coag = '".$agencia."'
 													and cuclas LIKE 'UR%'
 													and n9leco > 0
 													and n9leco <> ''
@@ -81,6 +82,7 @@
 													WHERE n9feco = '" . $fecha . "'
 													and n9fech = '" . $fecha . "' 
 													and n9cose = '".$sector."'
+													and n9coag = '".$agencia."'
 													and cuclas LIKE 'UR%'
 													and n9cobs = '".$BP1."'
 													and n9leco > 0
@@ -91,6 +93,7 @@
 													WHERE n9feco = '" . $fecha . "' 
 													and n9fech = '" . $fecha . "'
 													and n9cose = '".$sector."'
+													and n9coag = '".$agencia."'
 													and cuclas LIKE 'UR%'
 													and n9cobs = '".$BP2."'
 													and n9leco > 0
@@ -100,6 +103,7 @@
 										WHERE n9feco = '" . $fecha . "'
 										and n9fech = '" . $fecha . "' 
 										and n9cose = '".$sector."'
+										and n9coag = '".$agencia."'
 										and cuclas LIKE 'UR%'
 										and n9leco > 0
 										and n9leco <> ''
@@ -113,7 +117,7 @@
 			
 		}
 
-		public function getConteoSecYActRUR($fecha = '', $sector = '', $BP1 = '', $BP2 = '')
+		public function getConteoSecYActRUR($fecha = '', $sector = '', $BP1 = '', $BP2 = '', $agencia = '')
 		{
 			
 			$result = $this->db->query("SELECT  n9coag, n9cose, (SELECT COUNT(n9cose)
@@ -121,6 +125,7 @@
 													WHERE n9feco = '" . $fecha . "'
 													and n9fech = '" . $fecha . "' 
 													and n9cose = '".$sector."'
+													and n9coag = '".$agencia."'
 													and cuclas LIKE 'RU%'
 													and n9leco > 0
 													and n9leco <> ''
@@ -130,6 +135,7 @@
 													WHERE n9feco = '" . $fecha . "'
 													and n9fech = '" . $fecha . "' 
 													and n9cose = '".$sector."'
+													and n9coag = '".$agencia."'
 													and cuclas LIKE 'RU%'
 													and n9cobs = '".$BP1."'
 													and n9leco > 0
@@ -140,6 +146,7 @@
 													WHERE n9feco = '" . $fecha . "' 
 													and n9fech = '" . $fecha . "'
 													and n9cose = '".$sector."'
+													and n9coag = '".$agencia."'
 													and cuclas LIKE 'RU%'
 													and n9cobs = '".$BP2."'
 													and n9leco > 0
@@ -149,6 +156,7 @@
 										WHERE n9feco = '" . $fecha . "'
 										and n9fech = '" . $fecha . "' 
 										and n9cose = '".$sector."'
+										and n9coag = '".$agencia."'
 										and cuclas LIKE 'RU%'
 										and n9leco > 0
 										and n9leco <> ''
@@ -176,7 +184,7 @@
 		function getFechasMes()
 		{
 			$result = $this->db->query("SELECT n9fech from tbl_consolidado 
-										WHERE n9fech LIKE '201905%' 
+										WHERE n9fech LIKE '20190502' 
 										and n9leco > 0 and n9leco <> ''
 										GROUP by n9fech
 										ORDER BY n9fech ASC

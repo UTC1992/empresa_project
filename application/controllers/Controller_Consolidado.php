@@ -234,19 +234,22 @@ class Controller_Consolidado extends CI_Controller {
 		$datos4 = array();
 		$datosTotal = array();
 
+		$agencias = [1,2,3,4,5,6,7,95];
+
 		$fecha = $this->input->post('fecha');
 		//$sectorURoRU = $this->input->post('sectorURoRU');
 		
-		
-			$fila = $this->Model_Tblconsolidado->getConteoPorSector($fecha);
-		
+		$fila = $this->Model_Tblconsolidado->getConteoPorSector($fecha);
+
+		for ($i=0; $i < count($agencias); $i++) { 
+			
 			//llenamos el arreglo con los datos resultados de la consulta
 			//BORNERA
 			foreach ($fila->result() as $row) {
 				$sec = $row->n9cose;
 				$CB = "CB";
 				$RB = "RB";
-				$sectores = $this->Model_Tblconsolidado->getConteoSecYActURB($fecha, $sec, $CB, $RB);
+				$sectores = $this->Model_Tblconsolidado->getConteoSecYActURB($fecha, $sec, $CB, $RB, $agencias[$i]);
 				foreach($sectores->result_array() as $r){
 					$datos1[] = $r;
 				}
@@ -257,7 +260,7 @@ class Controller_Consolidado extends CI_Controller {
 				$sec = $row->n9cose;
 				$CP = "CP";
 				$RP = "RP";
-				$sectores = $this->Model_Tblconsolidado->getConteoSecYActURB($fecha, $sec, $CP, $RP);
+				$sectores = $this->Model_Tblconsolidado->getConteoSecYActURB($fecha, $sec, $CP, $RP, $agencias[$i]);
 				foreach($sectores->result_array() as $r){
 					$datos2[] = $r;
 				}
@@ -270,7 +273,7 @@ class Controller_Consolidado extends CI_Controller {
 				$sec = $row->n9cose;
 				$CB = "CB";
 				$RB = "RB";
-				$sectores = $this->Model_Tblconsolidado->getConteoSecYActRUR($fecha, $sec, $CB, $RB);
+				$sectores = $this->Model_Tblconsolidado->getConteoSecYActRUR($fecha, $sec, $CB, $RB, $agencias[$i]);
 				foreach($sectores->result_array() as $r){
 					$datos3[] = $r;
 				}
@@ -281,12 +284,13 @@ class Controller_Consolidado extends CI_Controller {
 				$sec = $row->n9cose;
 				$CP = "CP";
 				$RP = "RP";
-				$sectores = $this->Model_Tblconsolidado->getConteoSecYActRUR($fecha, $sec, $CP, $RP);
+				$sectores = $this->Model_Tblconsolidado->getConteoSecYActRUR($fecha, $sec, $CP, $RP, $agencias[$i]);
 				foreach($sectores->result_array() as $r){
 					$datos4[] = $r;
 				}
 			}
-			
+
+		}
 			$datosTotal[0] = $datos1;
 			$datosTotal[1] = $datos2;
 			$datosTotal[2] = $datos3;
@@ -360,7 +364,7 @@ class Controller_Consolidado extends CI_Controller {
 			
 				foreach ($datos1 as $key => $value) 
 				{	
-					if($value['n9coag'] == 6 || $value['n9coag'] == 95 || $value['n9coag'] == 7 ){
+					if($value['n9coag'] != 6 && $value['n9coag'] != 95 && $value['n9coag'] != 7 ){
 						$dataNOT[$cont_not]["N"]=$cont_not+1;
 						$dataNOT[$cont_not]["n9coag"]=$value['n9coag'];
 						$dataNOT[$cont_not]["n9cocl"]=$value['n9cocl'];
@@ -377,7 +381,7 @@ class Controller_Consolidado extends CI_Controller {
 				
 				foreach ($datos2 as $key => $value) 
 				{	
-					if($value['n9coag'] == 6 || $value['n9coag'] == 95 || $value['n9coag'] == 7 ){
+					if($value['n9coag'] != 6 && $value['n9coag'] != 95 && $value['n9coag'] != 7 ){
 						$dataCOR[$cont_cor]["N"]=$cont_cor+1;
 						$dataCOR[$cont_cor]["n9coag"]=$value['n9coag'];
 						$dataCOR[$cont_cor]["n9cocl"]=$value['n9cocl'];
@@ -393,7 +397,7 @@ class Controller_Consolidado extends CI_Controller {
 
 				foreach ($datos3 as $key => $value) 
 				{	
-					if($value['n9coag'] == 6 || $value['n9coag'] == 95 || $value['n9coag'] == 7 ){
+					if($value['n9coag'] != 6 && $value['n9coag'] != 95 && $value['n9coag'] != 7 ){
 						$dataREC[$cont_rec]["N"]=$cont_rec+1;
 						$dataREC[$cont_rec]["n9coag"]=$value['n9coag'];
 						$dataREC[$cont_rec]["n9cocl"]=$value['n9cocl'];

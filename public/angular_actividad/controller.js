@@ -212,11 +212,16 @@ app.controller('actividadCtrl', function($scope, $http, $location, $filter, NgTa
 	$scope.crearArrayActividadesURB = function(array1, array2){
 		var datosURB = new Array();
 		var datosURB2 = new Array();
+		var con1 = 0;
+		var con2 = 0;
 		for (let i = 0; i < array1.length; i++) {
-			if(parseInt(array1[i]['n9coag']) != 6 
-			&& parseInt(array1[i]['n9coag']) != 95
-			&& parseInt(array1[i]['n9coag']) != 7){
+			if(parseInt(array1[i]['n9coag']) == 1 
+			|| parseInt(array1[i]['n9coag']) == 2
+			|| parseInt(array1[i]['n9coag']) == 3
+			|| parseInt(array1[i]['n9coag']) == 4
+			|| parseInt(array1[i]['n9coag']) == 5){
 				var datosBP1 = {
+					"AGENCIA"	:	parseInt(array1[i]['n9coag']),
 					"SECTOR"	:	array1[i]['n9cose'],
 					"NOT"		:	parseInt(array1[i]['Notificacion']),
 					"CB"		: 	parseInt(array1[i]['Corte']),
@@ -224,9 +229,14 @@ app.controller('actividadCtrl', function($scope, $http, $location, $filter, NgTa
 					"RB"		: 	parseInt(array1[i]['Reconeccion']),
 					"RP"		:	parseInt(array2[i]['Reconeccion'])
 				};
-				datosURB[i] = datosBP1;
-			} else {
+				datosURB[con1] = datosBP1;
+				con1++;
+			}
+			if(parseInt(array1[i]['n9coag']) == 6 
+					|| parseInt(array1[i]['n9coag']) == 95
+					|| parseInt(array1[i]['n9coag']) == 7) {
 				var datosBP1 = {
+					"AGENCIA"	:	parseInt(array1[i]['n9coag']),
 					"SECTOR"	:	array1[i]['n9cose'],
 					"NOT"		:	parseInt(array1[i]['Notificacion']),
 					"CB"		: 	parseInt(array1[i]['Corte']),
@@ -234,7 +244,8 @@ app.controller('actividadCtrl', function($scope, $http, $location, $filter, NgTa
 					"RB"		: 	parseInt(array1[i]['Reconeccion']),
 					"RP"		:	parseInt(array2[i]['Reconeccion'])
 				};
-				datosURB2[i] = datosBP1;
+				datosURB2[con2] = datosBP1;
+				con2++;
 			}
 			
 		}
@@ -248,11 +259,16 @@ app.controller('actividadCtrl', function($scope, $http, $location, $filter, NgTa
 	$scope.crearArrayActividadesRUR = function(array1, array2){
 		var datosURB = new Array();
 		var datosURB2 = new Array();
+		var con1 = 0;
+		var con2 = 0;
 		for (let i = 0; i < array1.length; i++) {
-			if(parseInt(array1[i]['n9coag']) != 6 
-			&& parseInt(array1[i]['n9coag']) != 95
-			&& parseInt(array1[i]['n9coag']) != 7){
+			if(parseInt(array1[i]['n9coag']) == 1 
+			|| parseInt(array1[i]['n9coag']) == 2
+			|| parseInt(array1[i]['n9coag']) == 3
+			|| parseInt(array1[i]['n9coag']) == 4
+			|| parseInt(array1[i]['n9coag']) == 5){
 				var datosBP1 = {
+					"AGENCIA"	:	parseInt(array1[i]['n9coag']),
 					"SECTOR"	:	array1[i]['n9cose'],
 					"NOT"		:	parseInt(array1[i]['Notificacion']),
 					"CB"		: 	parseInt(array1[i]['Corte']),
@@ -260,9 +276,14 @@ app.controller('actividadCtrl', function($scope, $http, $location, $filter, NgTa
 					"RB"		: 	parseInt(array1[i]['Reconeccion']),
 					"RP"		:	parseInt(array2[i]['Reconeccion'])
 				};
-				datosURB[i] = datosBP1;
-			} else {
+				datosURB[con1] = datosBP1;
+				con1++;
+			}
+			if(parseInt(array1[i]['n9coag']) == 6 
+					|| parseInt(array1[i]['n9coag']) == 95
+					|| parseInt(array1[i]['n9coag']) == 7){
 				var datosBP1 = {
+					"AGENCIA"	:	parseInt(array1[i]['n9coag']),
 					"SECTOR"	:	array1[i]['n9cose'],
 					"NOT"		:	parseInt(array1[i]['Notificacion']),
 					"CB"		: 	parseInt(array1[i]['Corte']),
@@ -270,7 +291,8 @@ app.controller('actividadCtrl', function($scope, $http, $location, $filter, NgTa
 					"RB"		: 	parseInt(array1[i]['Reconeccion']),
 					"RP"		:	parseInt(array2[i]['Reconeccion'])
 				};
-				datosURB2[i] = datosBP1;
+				datosURB2[con2] = datosBP1;
+				con2++;
 			}
 			
 		}

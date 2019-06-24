@@ -8,6 +8,7 @@
 				<input type="hidden" id="urlConsultarActividades" 
 				value="<?=base_url()?>Controller_Consolidado/getDataJsonActDiarias">
 				<!--formulario para ingresar fecha y codigo de actividad-->
+				<!--
 				<form class="col-sm-12" name="fActividad"  ng-submit="consultarActividades()">
 					<div class="form-control col-sm-5" style="margin-bottom: 5px;">
 						<label>Ingrese la fecha:</label>
@@ -22,16 +23,35 @@
 					</div>
 					<button type="submit" class="btn btn-warning">Buscar</button>
 				</form>
-				<form class="col-sm-12" name="generarExcel" method="post" action="<?=base_url()?>Controller_Consolidado/generarExcelDetalleMensual" >
-					<div class="form-control col-sm-5" style="margin-bottom: 5px;">
-					<label>Descargar excel:</label>
-						<input class="form-control" name="fecha" ng-model="fecha" type="text" placeholder="0000-00-00" 
-						style="margin-bottom: 5px;" required>
-						<select class="form-control" name="actividad" ng-model="actividad" style="text-align: center;" required>
-							<option value="">Seleccionar</option>
-							<option value="010">010</option>
-							<option value="030">030</option>
-							<option value="040">040</option>
+				-->
+				<form class="col-sm-12" name="generarExcel" method="post" 
+				action="<?=base_url()?>Controller_Consolidado/generarExcelDetalleMensual" >
+					<div class="form-control col-sm-3" style="margin-bottom: 5px;">
+						<label>Generar Excel:</label>
+						<select class="form-control" name="anio" ng-model="anio" 
+						style="text-align: center;" required>
+							<option value="">--- Seleccionar Anio ---</option>
+							<option value="{{anio.anio}}" ng-repeat="anio in aniosSelect">{{anio.anio}}</option>
+						</select>
+						<br>
+						<select class="form-control" name="mes" ng-model="mes" 
+						style="text-align: center;" required>
+							<option value="">--- Seleccionar Mes ---</option>
+							<option value="{{mes.mes}}" ng-repeat="mes in mesesSelect">{{mes.mes}}</option>
+						</select>
+						<br>
+						<select class="form-control" name="dia" ng-model="dia" 
+						style="text-align: center;" require>
+							<option value="">--- Seleccionar dia ---</option>
+							<option value="0">No dia</option>
+							<option value="{{dia.dia}}" ng-repeat="dia in diasSelect">{{dia.dia}}</option>
+						</select>
+						<br>
+						<select class="form-control" name="contrato" ng-model="contrato" 
+						style="text-align: center;" require>
+							<option value="">--- Seleccionar contrato ---</option>
+							<option value="1">Contrato 1</option>
+							<option value="2">Contrato 2</option>
 						</select>
 					</div>
 					<button type="submit" class="btn btn-warning">Buscar</button>

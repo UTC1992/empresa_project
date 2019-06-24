@@ -310,15 +310,26 @@ class Controller_Consolidado extends CI_Controller {
 		try {
 			
 			$type="xlsx";
-			$fecha = $this->input->post('fecha');
-			$actividad = $this->input->post('actividad');
+			$anio = $this->input->post('anio');
+			$mes = $this->input->post('mes');
+			$dia = $this->input->post('dia');
+			$contrato = $this->input->post('contrato');
 
 			$datos4 = array();
-			$filaFechas = $this->Model_Tblconsolidado->getFechasMes();
-			foreach ($filaFechas->result_array() as $row) {
-				$datos4[] = $row;
-			}
 
+			if($dia == 0)
+			{
+				$filaFechas = $this->Model_Tblconsolidado->getFechasMes($anio."".$mes);
+				foreach ($filaFechas->result_array() as $row) {
+					$datos4[] = $row;
+				}
+			} else {
+				$filaFechas = $this->Model_Tblconsolidado->getFechasMes($anio."".$mes."".$dia);
+				foreach ($filaFechas->result_array() as $row) {
+					$datos4[] = $row;
+				}
+			}
+			
 			//inicializar
 			$spreadsheet = new Spreadsheet();
 			$indexSheet=0;
@@ -361,59 +372,109 @@ class Controller_Consolidado extends CI_Controller {
 				$cont_rec=0;
 				//echo "<pre>";
 				//print_r($datos3);
-			
-				foreach ($datos1 as $key => $value) 
-				{	
-					if($value['n9coag'] != 6 && $value['n9coag'] != 95 && $value['n9coag'] != 7 ){
-						$dataNOT[$cont_not]["N"]=$cont_not+1;
-						$dataNOT[$cont_not]["n9coag"]=$value['n9coag'];
-						$dataNOT[$cont_not]["n9cocl"]=$value['n9cocl'];
-						$dataNOT[$cont_not]["n9cocu"]=$value['n9cocu'];
-						$dataNOT[$cont_not]["n9meco"]=$value['n9meco'];
-						$dataNOT[$cont_not]["n9coru"]=$value['n9coru'];
-						$dataNOT[$cont_not]["n9cose"]=$value['n9cose'];
-						$dataNOT[$cont_not]["n9nomb"]=$value['n9nomb'];
-						$dataNOT[$cont_not]["n9refe"]=$value['n9refe'];
-						$cont_not++;
+				
+				if($contrato == 1){
+					foreach ($datos1 as $key => $value) 
+					{	
+						if($value['n9coag'] != 6 && $value['n9coag'] != 95 && $value['n9coag'] != 7 ){
+							$dataNOT[$cont_not]["N"]=$cont_not+1;
+							$dataNOT[$cont_not]["n9coag"]=$value['n9coag'];
+							$dataNOT[$cont_not]["n9cocl"]=$value['n9cocl'];
+							$dataNOT[$cont_not]["n9cocu"]=$value['n9cocu'];
+							$dataNOT[$cont_not]["n9meco"]=$value['n9meco'];
+							$dataNOT[$cont_not]["n9coru"]=$value['n9coru'];
+							$dataNOT[$cont_not]["n9cose"]=$value['n9cose'];
+							$dataNOT[$cont_not]["n9nomb"]=$value['n9nomb'];
+							$dataNOT[$cont_not]["n9refe"]=$value['n9refe'];
+							$cont_not++;
+						}
+						
 					}
 					
-				}
-				
-				foreach ($datos2 as $key => $value) 
-				{	
-					if($value['n9coag'] != 6 && $value['n9coag'] != 95 && $value['n9coag'] != 7 ){
-						$dataCOR[$cont_cor]["N"]=$cont_cor+1;
-						$dataCOR[$cont_cor]["n9coag"]=$value['n9coag'];
-						$dataCOR[$cont_cor]["n9cocl"]=$value['n9cocl'];
-						$dataCOR[$cont_cor]["n9cocu"]=$value['n9cocu'];
-						$dataCOR[$cont_cor]["n9meco"]=$value['n9meco'];
-						$dataCOR[$cont_cor]["n9coru"]=$value['n9coru'];
-						$dataCOR[$cont_cor]["n9cose"]=$value['n9cose'];
-						$dataCOR[$cont_cor]["n9nomb"]=$value['n9nomb'];
-						$dataCOR[$cont_cor]["n9refe"]=$value['n9refe'];
-						$cont_cor++;
+					foreach ($datos2 as $key => $value) 
+					{	
+						if($value['n9coag'] != 6 && $value['n9coag'] != 95 && $value['n9coag'] != 7 ){
+							$dataCOR[$cont_cor]["N"]=$cont_cor+1;
+							$dataCOR[$cont_cor]["n9coag"]=$value['n9coag'];
+							$dataCOR[$cont_cor]["n9cocl"]=$value['n9cocl'];
+							$dataCOR[$cont_cor]["n9cocu"]=$value['n9cocu'];
+							$dataCOR[$cont_cor]["n9meco"]=$value['n9meco'];
+							$dataCOR[$cont_cor]["n9coru"]=$value['n9coru'];
+							$dataCOR[$cont_cor]["n9cose"]=$value['n9cose'];
+							$dataCOR[$cont_cor]["n9nomb"]=$value['n9nomb'];
+							$dataCOR[$cont_cor]["n9refe"]=$value['n9refe'];
+							$cont_cor++;
+						}
+					}
+
+					foreach ($datos3 as $key => $value) 
+					{	
+						if($value['n9coag'] != 6 && $value['n9coag'] != 95 && $value['n9coag'] != 7 ){
+							$dataREC[$cont_rec]["N"]=$cont_rec+1;
+							$dataREC[$cont_rec]["n9coag"]=$value['n9coag'];
+							$dataREC[$cont_rec]["n9cocl"]=$value['n9cocl'];
+							$dataREC[$cont_rec]["n9cocu"]=$value['n9cocu'];
+							$dataREC[$cont_rec]["n9meco"]=$value['n9meco'];
+							$dataREC[$cont_rec]["n9coru"]=$value['n9coru'];
+							$dataREC[$cont_rec]["n9cose"]=$value['n9cose'];
+							$dataREC[$cont_rec]["n9nomb"]=$value['n9nomb'];
+							$dataREC[$cont_rec]["n9refe"]=$value['n9refe'];
+							$cont_rec++;
+						}
+					}
+				} else {
+					foreach ($datos1 as $key => $value) 
+					{	
+						if($value['n9coag'] == 6 || $value['n9coag'] == 95 || $value['n9coag'] == 7 ){
+							$dataNOT[$cont_not]["N"]=$cont_not+1;
+							$dataNOT[$cont_not]["n9coag"]=$value['n9coag'];
+							$dataNOT[$cont_not]["n9cocl"]=$value['n9cocl'];
+							$dataNOT[$cont_not]["n9cocu"]=$value['n9cocu'];
+							$dataNOT[$cont_not]["n9meco"]=$value['n9meco'];
+							$dataNOT[$cont_not]["n9coru"]=$value['n9coru'];
+							$dataNOT[$cont_not]["n9cose"]=$value['n9cose'];
+							$dataNOT[$cont_not]["n9nomb"]=$value['n9nomb'];
+							$dataNOT[$cont_not]["n9refe"]=$value['n9refe'];
+							$cont_not++;
+						}
+						
+					}
+					
+					foreach ($datos2 as $key => $value) 
+					{	
+						if($value['n9coag'] == 6 || $value['n9coag'] == 95 || $value['n9coag'] == 7 ){
+							$dataCOR[$cont_cor]["N"]=$cont_cor+1;
+							$dataCOR[$cont_cor]["n9coag"]=$value['n9coag'];
+							$dataCOR[$cont_cor]["n9cocl"]=$value['n9cocl'];
+							$dataCOR[$cont_cor]["n9cocu"]=$value['n9cocu'];
+							$dataCOR[$cont_cor]["n9meco"]=$value['n9meco'];
+							$dataCOR[$cont_cor]["n9coru"]=$value['n9coru'];
+							$dataCOR[$cont_cor]["n9cose"]=$value['n9cose'];
+							$dataCOR[$cont_cor]["n9nomb"]=$value['n9nomb'];
+							$dataCOR[$cont_cor]["n9refe"]=$value['n9refe'];
+							$cont_cor++;
+						}
+					}
+
+					foreach ($datos3 as $key => $value) 
+					{	
+						if($value['n9coag'] == 6 || $value['n9coag'] == 95 || $value['n9coag'] == 7  ){
+							$dataREC[$cont_rec]["N"]=$cont_rec+1;
+							$dataREC[$cont_rec]["n9coag"]=$value['n9coag'];
+							$dataREC[$cont_rec]["n9cocl"]=$value['n9cocl'];
+							$dataREC[$cont_rec]["n9cocu"]=$value['n9cocu'];
+							$dataREC[$cont_rec]["n9meco"]=$value['n9meco'];
+							$dataREC[$cont_rec]["n9coru"]=$value['n9coru'];
+							$dataREC[$cont_rec]["n9cose"]=$value['n9cose'];
+							$dataREC[$cont_rec]["n9nomb"]=$value['n9nomb'];
+							$dataREC[$cont_rec]["n9refe"]=$value['n9refe'];
+							$cont_rec++;
+						}
 					}
 				}
 
-				foreach ($datos3 as $key => $value) 
-				{	
-					if($value['n9coag'] != 6 && $value['n9coag'] != 95 && $value['n9coag'] != 7 ){
-						$dataREC[$cont_rec]["N"]=$cont_rec+1;
-						$dataREC[$cont_rec]["n9coag"]=$value['n9coag'];
-						$dataREC[$cont_rec]["n9cocl"]=$value['n9cocl'];
-						$dataREC[$cont_rec]["n9cocu"]=$value['n9cocu'];
-						$dataREC[$cont_rec]["n9meco"]=$value['n9meco'];
-						$dataREC[$cont_rec]["n9coru"]=$value['n9coru'];
-						$dataREC[$cont_rec]["n9cose"]=$value['n9cose'];
-						$dataREC[$cont_rec]["n9nomb"]=$value['n9nomb'];
-						$dataREC[$cont_rec]["n9refe"]=$value['n9refe'];
-						$cont_rec++;
-					}
-				}
-				
-				$spreadsheet->getActiveSheet()->setTitle("S$indexSheet");
-				$spreadsheet->getActiveSheet()->getColumnDimension('H')->setWidth(40);
-				$spreadsheet->getActiveSheet()->getColumnDimension('I')->setWidth(40);
+				//crear una hoja para llenarla
+				$spreadsheet->createSheet($indexSheet);
 
 				$styleArray = [
 					'borders' => [
@@ -426,14 +487,16 @@ class Controller_Consolidado extends CI_Controller {
 
 				$x=0;
 				if(count($dataNOT)>0){
+					$x++;
+					$spreadsheet->setActiveSheetIndex($indexSheet)
+								->setCellValue("A1","NOTIFICACIONES");
 					$spreadsheet->getActiveSheet()->mergeCells('A1:I1');
 					$spreadsheet->getActiveSheet()->getStyle("A1:I1")
 						->applyFromArray($styleArray);
-					$spreadsheet->setActiveSheetIndex($indexSheet)
-								->setCellValue("A1","NOTIFICACIONES");
 					$spreadsheet->getActiveSheet()->getStyle("A1")
 					->getAlignment()
 					->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+					$x++;
 					$spreadsheet->setActiveSheetIndex($indexSheet)
 								->setCellValue("A2",'N°')
 								->setCellValue("B2",'AGENCIA')
@@ -463,7 +526,7 @@ class Controller_Consolidado extends CI_Controller {
 					$spreadsheet->getActiveSheet()->getStyle("I2")
 					->applyFromArray($styleArray);
 
-					$x= 3;
+					$x++;
 					foreach($dataNOT as $item){
 						$spreadsheet->setActiveSheetIndex($indexSheet)
 								->setCellValue("A$x",$item["N"])
@@ -507,14 +570,16 @@ class Controller_Consolidado extends CI_Controller {
 				}
 			
 				if(count($dataCOR)>0){
+					$x++;
+					$spreadsheet->setActiveSheetIndex($indexSheet)
+								->setCellValue("A$x","CORTES");
 					$spreadsheet->getActiveSheet()->mergeCells("A$x:I$x");
-					$spreadsheet->getActiveSheet()->getStyle("A$x")
+					$spreadsheet->getActiveSheet()->getStyle("A$x:I$x")
 						->applyFromArray($styleArray);
 					$spreadsheet->getActiveSheet()->getStyle("A$x")
 					->getAlignment()
 					->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-					$spreadsheet->setActiveSheetIndex($indexSheet)
-								->setCellValue("A$x","CORTES");
+					
 					$x++;
 					$spreadsheet->setActiveSheetIndex($indexSheet)
 								->setCellValue("A$x",'N°')
@@ -589,14 +654,15 @@ class Controller_Consolidado extends CI_Controller {
 				}
 			
 				if(count($dataREC)>0){
+					$x++;
+					$spreadsheet->setActiveSheetIndex($indexSheet)
+						->setCellValue("A$x","RECONEXIONES");
 					$spreadsheet->getActiveSheet()->mergeCells("A$x:I$x");
-					$spreadsheet->getActiveSheet()->getStyle("A$x")
+					$spreadsheet->getActiveSheet()->getStyle("A$x:I$x")
 						->applyFromArray($styleArray);
 					$spreadsheet->getActiveSheet()->getStyle("A$x")
-					->getAlignment()
-					->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-					$spreadsheet->setActiveSheetIndex($indexSheet)
-								->setCellValue("A$x","RECONEXIONES");
+						->getAlignment()
+						->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
 					$x++;
 					$spreadsheet->setActiveSheetIndex($indexSheet)
 								->setCellValue("A$x",'N°')
@@ -669,8 +735,9 @@ class Controller_Consolidado extends CI_Controller {
 					$x++;
 					}
 				}
-				
-				$spreadsheet->createSheet();
+				$spreadsheet->getActiveSheet()->setTitle("S$indexSheet");
+				$spreadsheet->getActiveSheet()->getColumnDimension('H')->setWidth(40);
+				$spreadsheet->getActiveSheet()->getColumnDimension('I')->setWidth(40);
 				$indexSheet++;
 				
 			}
@@ -678,7 +745,7 @@ class Controller_Consolidado extends CI_Controller {
 			$spreadsheet->setActiveSheetIndex(0);
 			//nombre del EXCEL descargado
 			//$vector = explode("-",$mes);
-			$fileName = 'CONSOLIDADO_LECTURAS';
+			$fileName = 'ADETALLE_MENSUAL';
 			$writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, "Xlsx");
 			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 			header('Content-Disposition: attachment; filename='.$fileName.".".$type);

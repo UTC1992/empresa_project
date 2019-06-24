@@ -19,6 +19,43 @@ app.controller('actividadCtrl', function($scope, $http, $location, $filter, NgTa
 	$scope.datos3 = [];
 	$scope.datos4 = [];
 
+	$scope.diasSelect = [];
+	$scope.mesesSelect = [];
+	$scope.aniosSelect = [];
+	llenarDias();
+	llenarMeses();
+	llenarAnios();
+
+	function llenarAnios() {
+		let contador = 0;
+		for (let i = 2019; i < 2100; i++) {
+			$scope.aniosSelect[contador] = {anio: i};
+			contador += 1;
+		}
+	}
+
+	function llenarDias() {
+		for (let i = 0; i < 31; i++) {
+			if(i < 9){
+				$scope.diasSelect[i] = {dia: '0'+(i+1)};
+			} else {
+				$scope.diasSelect[i] = {dia: i+1};
+			}
+			
+		}
+	}
+
+	function llenarMeses() {
+		for (let i = 0; i < 12; i++) {
+			if(i < 9){
+				$scope.mesesSelect[i] = {mes: '0'+(i+1)};
+			} else {
+				$scope.mesesSelect[i] = {mes: i+1};
+			}
+			
+		}
+	}
+
 	// funcion para consultar las actividades segun los datos enviados
     $scope.consultarActividades = function () {
         $scope.url = document.getElementById("urlConsultarActividades").value;
